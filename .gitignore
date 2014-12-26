@@ -7,3 +7,7 @@ build
 .gradle
 .idea
 poker-player-java.iml
+/target/
+.pid
+nb-configuration.xml
+nbactions.xml
