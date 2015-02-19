@@ -1,17 +1,15 @@
 package org.leanpoker.player;
 
-import com.google.gson.JsonElement;
-
-import java.util.Map;
+import com.wcs.poker.gamestate.GameState;
 
 public class Player {
 
     static final String VERSION = "Default Java folding player";
 
-    public static int betRequest(JsonElement request) {
+    public static int betRequest(GameState gameState) {
         return 0;
     }
 
-    public static void showdown(JsonElement game) {
+    public static void showdown(GameState gameState) {
     }
 }

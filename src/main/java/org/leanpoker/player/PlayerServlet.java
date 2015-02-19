@@ -1,7 +1,7 @@
 package org.leanpoker.player;
 
-import com.google.gson.JsonParser;
-
+import com.wcs.poker.gamestate.GameState;
+import com.wcs.poker.jsonconverter.JsonConverter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,12 +22,12 @@ public class PlayerServlet extends HttpServlet {
         if (req.getParameter("action").equals("bet_request")) {
             String gameState = req.getParameter("game_state");
 
-            resp.getWriter().print(Player.betRequest(new JsonParser().parse(gameState)));
+            resp.getWriter().print(Player.betRequest(new JsonConverter<>(GameState.class).fromJson(gameState)));
         }
         if (req.getParameter("action").equals("showdown")) {
             String gameState = req.getParameter("game_state");
 
-            Player.showdown(new JsonParser().parse(gameState));
+            Player.showdown(new JsonConverter<>(GameState.class).fromJson(gameState));
         }
         if (req.getParameter("action").equals("version")) {
             resp.getWriter().print(Player.VERSION);
