@@ -19,6 +19,9 @@ public class Player {
         // Get bigBlind
         Integer bigBlind = gameState.getSmallBlind()*2;
         
+        // Get call
+        int call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
+        
         return 0;
     }
 
