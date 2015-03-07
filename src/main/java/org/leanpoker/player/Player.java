@@ -14,8 +14,10 @@ public class Player {
                 gameState.getPlayers().get(gameState.getInAction());
         
         // Get current player's hold cards
-        List<Card> currentHoldCards = currentPlayer.getHoleCards();
+        List<Card> currentHoleCards = currentPlayer.getHoleCards();
         
+        // Get bigBlind
+        Integer bigBlind = gameState.getSmallBlind()*2;
         
         return 0;
     }
