@@ -1,6 +1,8 @@
 package org.leanpoker.player;
 
+import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
+import java.util.List;
 
 public class Player {
 
@@ -10,6 +12,10 @@ public class Player {
         // Get current player from game state
         com.wcs.poker.gamestate.Player currentPlayer = 
                 gameState.getPlayers().get(gameState.getInAction());
+        
+        // Get current player's hold cards
+        List<Card> currentHoldCards = currentPlayer.getHoleCards();
+        
         
         return 0;
     }
