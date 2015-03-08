@@ -12,7 +12,6 @@ public class Player {
     
     
     public static int betRequest(GameState gameState) {
-        int bet=0;
         // Get current player from game state
         com.wcs.poker.gamestate.Player currentPlayer = 
                 gameState.getPlayers().get(gameState.getInAction());
@@ -29,14 +28,19 @@ public class Player {
         //minimum_bet
         int minimum_raise=0;
         
+        Card card1=currentHoleCards.get(0);
+        Card card2=currentHoleCards.get(1);
+        
         for (int i = 0; i < 3; i++) {
-            if (currentHoleCards.get(0).getRank() == RANKS[i] && currentHoleCards.get(1).getRank() == RANKS[i]) {
+            if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i]) {
+                //AA,KK,QQ
                 return minimum_raise + 2 * bigBlind;
             }
         }
-        if ((currentHoleCards.get(0).getRank() == RANKS[0] && currentHoleCards.get(0).getRank() == RANKS[1])
-                || (currentHoleCards.get(0).getRank() == RANKS[1] && currentHoleCards.get(0).getRank() == RANKS[0])) {
-                return minimum_raise + 2 * bigBlind;
+        if ((card1.getRank() == RANKS[0] && card2.getRank() == RANKS[1])
+                || (card1.getRank() == RANKS[1] && card2.getRank() == RANKS[0])) {
+                //AK
+                return minimum_raise + bigBlind;
         }
         
         if (gameState.getInAction() == gameState.getDealer() + 1
@@ -44,15 +48,38 @@ public class Player {
             //Blinds
         } else if (gameState.getInAction() == gameState.getDealer() + 3) {
             //Early postion
-            
+            return 0;
         } else if (gameState.getInAction() == gameState.getDealer() + 4) {
             //Middle postion
+                //Raise
+                for (int i = 3; i < 6; i++) {
+                    //JJ,TT,99
+                    if (card1.getRank()==RANKS[i] && card2.getRank()==RANKS[i]) {
+                        return minimum_raise;
+                    }
+                    //AQ,AJ,AT
+                    if(card1.getRank()==RANKS[0] && card2.getRank()==RANKS[i-1]){
+                        return minimum_raise;
+                    }
+                }
+                for (int i = 5; i <= RANKS.length; i++) {
+                    //A9s to A2s
+                    if (card1.getRank()==RANKS[0] && card2.getRank()==RANKS[i] && card1.getSuit().equals(card2.getSuit())) {
+                        return minimum_raise;
+                    }
+                }
+                //Call
+                for (int i = 6; i <= RANKS.length; i++) {
+                    //88 to 22
+                    if (card1.getRank()==RANKS[i] && card2.getRank()==RANKS[i]) {
+                        return call;
+                    }
+                }
         } else {
             //Late postion
         }
         
-        
-        return bet;
+        return 0;
     }
 
     public static void showdown(GameState gameState) {
