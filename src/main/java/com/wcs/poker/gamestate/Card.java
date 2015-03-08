@@ -14,6 +14,16 @@ public class Card {
 
     /**
      * 
+     * @param rank
+     * @param suit 
+     */
+    public Card(String rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
+    
+    /**
+     * 
      * @return
      *     The rank
      */
