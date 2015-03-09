@@ -16,7 +16,7 @@ public class Player {
         com.wcs.poker.gamestate.Player currentPlayer = 
                 gameState.getPlayers().get(gameState.getInAction());
         
-        // Get current player's hold cards
+        // Get current player's hole cards
         List<Card> currentHoleCards = currentPlayer.getHoleCards();
         
         // Get bigBlind
@@ -25,16 +25,14 @@ public class Player {
         // Get call
         int call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
         
-        //Min bet
-        int minimum_raise = gameState.getCurrentBuyIn() - currentPlayer.getBet() + gameState.getMinimumRaise();
+        // Minimum raise
+        int minimum_raise = call + gameState.getMinimumRaise();
         
+        // Hole cards
+        Card card1 = currentHoleCards.get(0);
+        Card card2 = currentHoleCards.get(1);
         
-        //minimum_bet
-        
-        
-        Card card1=currentHoleCards.get(0);
-        Card card2=currentHoleCards.get(1);
-        
+        // Pre-flop strategy
         for (int i = 0; i < 3; i++) {
             if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i]) {
                 //AA,KK,QQ
@@ -69,13 +67,15 @@ public class Player {
             }
             for (int i = 5; i <= RANKS.length; i++) {
                 //A9s to A2s
-                if (card1.getRank() == RANKS[0] && card2.getRank() == RANKS[i] && card1.getSuit().equals(card2.getSuit())) {
+                if (card1.getRank() == RANKS[0] && card2.getRank() == RANKS[i] 
+                        && card1.getSuit().equals(card2.getSuit())) {
                     return minimum_raise;
                 }
             }
             for (int i = 6; i <= RANKS.length; i++) {
                 //88 to 22
-                if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i] && gameState.getInAction() == gameState.getDealer() + 4) {
+                if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i] 
+                        && gameState.getInAction() == gameState.getDealer() + 4) {
                     return call;
                 } else if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i]){
                     return minimum_raise;
@@ -87,26 +87,30 @@ public class Player {
             if ((gameState.getInAction() < gameState.getDealer() + 4)) {
                 for (int i = 2; i < 5; i++) {
                     //KQ,KJ,KT
-                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[1] || card1.getRank() == RANKS[1]
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[1] 
+                            || card1.getRank() == RANKS[1]
                             && card2.getRank() == RANKS[i])) {
                         return minimum_raise;
                     }
                 }
                 for (int i = 4; i < 5; i++) {
                     //QJ,QT
-                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[2] || card1.getRank() == RANKS[2]
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[2] 
+                            || card1.getRank() == RANKS[2]
                             && card2.getRank() == RANKS[i])) {
                         return minimum_raise;
                     }
                 }
                     //JT
-                    if ((card1.getRank() == RANKS[3] && card2.getRank() == RANKS[4] || card1.getRank() == RANKS[4]
+                    if ((card1.getRank() == RANKS[3] && card2.getRank() == RANKS[4] 
+                            || card1.getRank() == RANKS[4]
                             && card2.getRank() == RANKS[3])) {
                         return minimum_raise;
                     }
                 for (int i = 3; i <9; i++) {
                     //JTs to 54s
-                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i+1] || card1.getRank() == RANKS[i+1]
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i+1] 
+                            || card1.getRank() == RANKS[i+1]
                             && card2.getRank() == RANKS[i])) {
                         return minimum_raise;
                     }
