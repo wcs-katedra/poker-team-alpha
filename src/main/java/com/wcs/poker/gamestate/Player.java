@@ -26,6 +26,15 @@ public class Player {
     @Expose
     private List<Card> holeCards = new ArrayList<Card>();
 
+    public Player(Integer id, String name, String status, String version, Integer stack, Integer bet) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.version = version;
+        this.stack = stack;
+        this.bet = bet;
+    }
+
     /**
      * 
      * @return
