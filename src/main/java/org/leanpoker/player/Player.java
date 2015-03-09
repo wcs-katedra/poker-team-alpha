@@ -25,6 +25,10 @@ public class Player {
         // Get call
         int call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
         
+        //Min bet
+        int minBid = gameState.getCurrentBuyIn() - currentPlayer.getBet() + gameState.getMinimumRaise();
+        
+        
         //minimum_bet
         int minimum_raise=0;
         
