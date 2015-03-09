@@ -48,6 +48,56 @@ public class Player {
         if (gameState.getInAction() == gameState.getDealer() + 1
                 || gameState.getInAction() == gameState.getDealer() + 2) {
             //Blinds
+           for (int i = 3; i < 6; i++) {
+                //JJ,TT,99
+                if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i]) {
+                    return minimum_raise;
+                }
+                //AQ,AJ,AT
+                if (card1.getRank() == RANKS[0] && card2.getRank() == RANKS[i - 1]) {
+                    return minimum_raise;
+                }
+           }
+            for (int i = 6; i <= RANKS.length; i++) {
+                //88 to 22
+                if (card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i] 
+                        && gameState.getInAction() == gameState.getDealer() + 4) {
+                    return call;
+                }
+            }
+            for (int i = 5; i <= RANKS.length; i++) {
+                //A9s to A2s
+                if (card1.getRank() == RANKS[0] && card2.getRank() == RANKS[i] 
+                        && card1.getSuit().equals(card2.getSuit())) {
+                    return minimum_raise;
+                }
+            }
+            for (int i = 2; i < 5; i++) {
+                    //KQ,KJ,KT
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[1] 
+                            || card1.getRank() == RANKS[1]
+                            && card2.getRank() == RANKS[i])) {
+                        return minimum_raise;
+                    }
+                }
+            for (int i = 4; i < 5; i++) {
+                    //QJ,QT
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[2] 
+                            || card1.getRank() == RANKS[2]
+                            && card2.getRank() == RANKS[i])) {
+                        return call;
+                    }
+                }
+            for (int i = 3; i <9; i++) {
+                    //JTs to 54s
+                    if ((card1.getRank() == RANKS[i] && card2.getRank() == RANKS[i+1] 
+                            || card1.getRank() == RANKS[i+1]
+                            && card2.getRank() == RANKS[i])) {
+                        return call;
+                    }
+                }
+            
+            
             
         } else if (gameState.getInAction() == gameState.getDealer() + 3) {
             //Early postion
