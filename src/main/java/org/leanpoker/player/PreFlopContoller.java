@@ -4,8 +4,6 @@ import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
 import com.wcs.poker.gamestate.Player;
 import java.util.List;
-import org.leanpoker.player.holecards.BigAces;
-import org.leanpoker.player.holecards.HighPairs;
 import org.leanpoker.player.holecards.MidPairs;
 
 /**
@@ -22,6 +20,7 @@ public class PreFlopContoller {
     private Integer minimum_raise;
     private Integer pot;
     private Integer currentDealerPosition;
+    private Integer expectedPot;
 
     private String myPositionCat;
 
@@ -29,6 +28,8 @@ public class PreFlopContoller {
     private Integer latePosition = 70;
     private int playersNumber;
     private Integer currentPlayerLoc;
+    private List<Player> players;
+    private boolean everybodyFolded;
 
     //private static final String[] RANKS = {"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"};
     //private static final String[] SUITS = {"spades", "clubs", "diamonds", "hearts"};
@@ -43,11 +44,16 @@ public class PreFlopContoller {
     int start() {
         divideUp();
         myPositionCat = whatPositionIhave();
-        
+        expectedPot = countExpectedPot();
         Integer bet=0;
-        bet+=new HighPairs().start();
-        bet=new BigAces().start();
-        bet=new MidPairs(currentHoleCards,gameState.getPlayers(),myPositionCat,this).start();
+//        bet+=new HighPairs().start();
+//        bet+=new BigAces().start();
+        bet+=new MidPairs(myPositionCat,this).start();
+//        bet+=new SmallPairs().start();
+//        bet+=new MidAces().start();
+//        bet+=new SuitedAces().start();
+//        bet+=new FaceCards().start();
+//        bet+=new SuitedConnectors().start();
         return 0;
     }
 
@@ -60,20 +66,21 @@ public class PreFlopContoller {
         minimum_raise = call + gameState.getMinimumRaise();
         pot = gameState.getPot();
         currentDealerPosition = gameState.getDealer();
-        playersNumber=gameState.getPlayers().size();
+        players=gameState.getPlayers();
+        playersNumber=players.size();
     }
 
     public String whatPositionIhave() {
         double relativPos = (double)currentPlayerLoc / playersNumber*100;
 
-        if (amIblink()){return "Blinks";}
+        if (amIblind()){return "Blinks";}
         if (relativPos < middlePosition && relativPos!=0) {return "Early";}
         if (relativPos > middlePosition 
                 && relativPos < latePosition) {return "Middle";}
         return "Late";
     }
 
-    public boolean amIblink() {
+    public boolean amIblind() {
         Integer smallBlindLoc=(currentDealerPosition+1)%playersNumber;
         Integer bigBlindLoc=(currentDealerPosition+2)%playersNumber;
         
@@ -89,6 +96,19 @@ public class PreFlopContoller {
         return false;
         }
     
+     private Integer countExpectedPot() {
+         Integer expectedPot=gameState.getSmallBlind()*3;
+         Integer folded=0;
+         for (int i = (currentDealerPosition+3)%playersNumber; i < currentPlayerLoc; i++) {
+             if (players.get(i).getStatus().equals("active")) {
+                 expectedPot+=bigBlind;
+             } else if (players.get(i).getStatus().equals("folded")){
+                 folded++;
+             }
+         }
+         if (expectedPot==(gameState.getSmallBlind()*3)){everybodyFolded=true;}
+         return expectedPot;
+    }
     
     
     //getters
@@ -144,6 +164,12 @@ public class PreFlopContoller {
     public Integer getCurrentPlayerLoc() {
         return currentPlayerLoc;
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+    
+    
     
     //setters
 
@@ -198,6 +224,12 @@ public class PreFlopContoller {
     public void setCurrentPlayerLoc(Integer currentPlayerLoc) {
         this.currentPlayerLoc = currentPlayerLoc;
     }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+   
     
     
 }

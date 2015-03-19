@@ -44,7 +44,8 @@ public class MidPairs {
     }
     
     public Integer betRequest() {
-        if (preFlopController.isPair(card1, card2) && card1.getRank().matches(pattern)) {
+        if (preFlopController.isPair(card1, card2) 
+                && card1.getRank().matches(pattern)) {
             switch (myPositionCat){
                 case "Blinds": return minimum_raise;
                 case "Early":return 0;
