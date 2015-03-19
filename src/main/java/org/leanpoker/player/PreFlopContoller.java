@@ -32,6 +32,7 @@ public class PreFlopContoller {
     private boolean everybodyFolded;
     private Integer smallBlind;
     private int folded;
+    private String whatHappenedBeforeMe;
 
     public PreFlopContoller() {
     }
@@ -44,10 +45,11 @@ public class PreFlopContoller {
         divideUp();
         myPositionCat = whatPositionIhave();
         expectedPot = countExpectedPot();
+        whatHappenedBeforeMe=whatHappenedBeforeMe(expectedPot);
         Integer bet=0;
 //        bet+=new HighPairs().start();
 //        bet+=new BigAces().start();
-        bet+=new MidPairs(myPositionCat,this).start();
+        bet+=new MidPairs(myPositionCat,whatHappenedBeforeMe,this).start();
 //        bet+=new SmallPairs().start();
 //        bet+=new MidAces().start();
 //        bet+=new SuitedAces().start();
@@ -110,6 +112,12 @@ public class PreFlopContoller {
          return expectedPot;
     }
     
+     private String whatHappenedBeforeMe(Integer expectedPot) {
+        if (everybodyFolded)return "Everybody folded";
+        if (expectedPot<pot) return "Somebody raised";
+        if (pot>3*smallBlind)return "Somebody called";
+        return "";
+    }
     
     //getters
 
@@ -261,7 +269,4 @@ public class PreFlopContoller {
         this.folded = folded;
     }
 
-   
-    
-    
 }
