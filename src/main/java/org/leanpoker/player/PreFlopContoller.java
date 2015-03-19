@@ -112,7 +112,7 @@ public class PreFlopContoller {
          return expectedPot;
     }
     
-     private String whatHappenedBeforeMe(Integer expectedPot) {
+     public String whatHappenedBeforeMe(Integer expectedPot) {
         if (everybodyFolded)return "Everybody folded";
         if (expectedPot<pot) return "Somebody raised";
         if (pot>3*smallBlind)return "Somebody called";

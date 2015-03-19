@@ -43,6 +43,28 @@ public class PreFlopContollerIT {
     }
     
     @Test
+    public void testWhatHappenedBefore() {
+        preFlopController.setPot(1000);
+        preFlopController.setSmallBlind(10);
+        preFlopController.setEverybodyFolded(true);
+        Integer expectedPot=500;
+        assertEquals("Everybody folded", preFlopController.whatHappenedBeforeMe(expectedPot));
+        
+        preFlopController.setPot(50);
+        preFlopController.setSmallBlind(10);
+        preFlopController.setEverybodyFolded(false);
+        expectedPot=120;
+        assertEquals("Somebody called", preFlopController.whatHappenedBeforeMe(expectedPot));
+        
+        preFlopController.setPot(1000);
+        preFlopController.setSmallBlind(10);
+        preFlopController.setEverybodyFolded(false);
+        expectedPot=500;
+        assertEquals("Somebody raised", preFlopController.whatHappenedBeforeMe(expectedPot));
+        
+    }
+    
+    @Test
     public void testCountExpectedPot() {
         List<Player> players=new ArrayList<>();
         preFlopController.setCurrentDealerPosition(0);
