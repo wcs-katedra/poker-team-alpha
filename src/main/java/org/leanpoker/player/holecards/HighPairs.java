@@ -19,6 +19,8 @@ public class HighPairs {
     private Card card2;
     private Integer minimum_raise;
 
+    public HighPairs(){}
+    
     public HighPairs(PreFlopContoller aThis) {
         this.preFlopController=aThis;
     }
