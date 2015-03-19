@@ -73,4 +73,13 @@ public class PreFlopContollerIT {
         assertFalse(preFlopController.amIblink());
     }
     
+    @Test
+    public void testIsPair(){
+        Card card1=new Card("A", "clubs");
+        Card card2=new Card("A", "spades");
+        assertTrue(preFlopController.isPair(card1, card2));
+        
+        card1.setRank("Q");
+        assertFalse(preFlopController.isPair(card1, card2));
+    }
 }
