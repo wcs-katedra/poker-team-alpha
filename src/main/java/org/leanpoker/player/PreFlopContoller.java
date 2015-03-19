@@ -29,6 +29,11 @@ class PreFlopContoller {
 
     //private static final String[] RANKS = {"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"};
     //private static final String[] SUITS = {"spades", "clubs", "diamonds", "hearts"};
+
+    public PreFlopContoller() {
+    }
+    
+    
     PreFlopContoller(GameState gameState) {
         this.gameState = gameState;
     }
@@ -52,17 +57,17 @@ class PreFlopContoller {
         playersNumber=gameState.getPlayers().size();
     }
 
-    private String whatPositionIhave() {
-        double relativPos = currentPlayerLoc / playersNumber;
+    public String whatPositionIhave() {
+        double relativPos = (double)currentPlayerLoc / playersNumber*100;
 
         if (amIblink()){return "Blinks";}
-        if (relativPos < middlePosition) {return "Early";}
+        if (relativPos < middlePosition && relativPos!=0) {return "Early";}
         if (relativPos > middlePosition 
                 && relativPos < latePosition) {return "Middle";}
         return "Late";
     }
 
-    private boolean amIblink() {
+    public boolean amIblink() {
         Integer smallBlindLoc=(currentDealerPosition+1)%playersNumber;
         Integer bigBlindLoc=(currentDealerPosition+2)%playersNumber;
         
