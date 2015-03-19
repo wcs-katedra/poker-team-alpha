@@ -7,13 +7,10 @@ package org.leanpoker.player;
 
 import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
-import com.wcs.poker.gamestate.Player;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.Random;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -24,6 +21,7 @@ import static org.junit.Assert.*;
 public class PreFlopContollerIT {
     
     PreFlopContoller preFlopController;
+    GameState gamestate;
     
     public PreFlopContollerIT() {
     }
@@ -31,6 +29,8 @@ public class PreFlopContollerIT {
     @Before
     public void setUpClass() {
         preFlopController=new PreFlopContoller();
+        gamestate=new GameState();
+        gamestate.setSmallBlind(10);
     }
     
     
@@ -40,6 +40,23 @@ public class PreFlopContollerIT {
     //@Test
     public void testStart() {
         
+    }
+    
+    @Test
+    public void testCountExpectedPot() {
+        List<com.wcs.poker.gamestate.Player> players=new ArrayList<>();
+        preFlopController.setCurrentDealerPosition(0);
+        preFlopController.setCurrentPlayerLoc(7);
+        com.wcs.poker.gamestate.Player player;
+        String[] statuses= {"active","folded","out"};
+        Random rand = new Random();
+        for (int i = 0; i < 10; i++) {
+            player=new com.wcs.poker.gamestate.Player();
+            player.setStatus(statuses[rand.nextInt(statuses.length)]);
+            players.add(player);
+        }
+        preFlopController.setPlayers(players);
+        preFlopController.setPlayersNumber(players.size());
     }
     
     @Test
@@ -67,10 +84,10 @@ public class PreFlopContollerIT {
         preFlopController.setPlayersNumber(10);
         
         preFlopController.setCurrentPlayerLoc(2);
-        assertTrue(preFlopController.amIblink());
+        assertTrue(preFlopController.amIblind());
         
         preFlopController.setCurrentPlayerLoc(3);
-        assertFalse(preFlopController.amIblink());
+        assertFalse(preFlopController.amIblind());
     }
     
     @Test
