@@ -17,8 +17,8 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class MidPairsIT {
     
-    MidPairs midPairs;
-    PreFlopContoller preFlopController;
+    private MidPairs midPairs;
+    private PreFlopContoller preFlopController;
     
     public MidPairsIT() {
     }

@@ -49,8 +49,8 @@ public class PreFlopContoller {
         expectedPot = countExpectedPot();
         whatHappenedBeforeMe=whatHappenedBeforeMe(expectedPot);
         Integer bet=0;
-        bet+=new HighPairs(myPositionCat,whatHappenedBeforeMe,this).start();
-        bet+=new BigAces(myPositionCat,whatHappenedBeforeMe,this).start();
+        bet+=new HighPairs(this).start();
+        bet+=new BigAces(this).start();
         bet+=new MidPairs(myPositionCat,whatHappenedBeforeMe,this).start();
 //        bet+=new SmallPairs().start();
 //        bet+=new MidAces().start();

@@ -19,6 +19,8 @@ public class BigAces {
     private Card card2;
     private Integer minimum_raise;
 
+    public BigAces(){}
+    
     public BigAces(PreFlopContoller aThis) {
         this.preFlopController=aThis;
     }
@@ -32,7 +34,8 @@ public class BigAces {
 
     public Integer betRequest() {
         if(!preFlopController.isPair(card1, card2)
-                && card1.getRank().matches(pattern)){
+                && card1.getRank().matches(pattern)
+                && card2.getRank().matches(pattern)){
             return minimum_raise;
         }
         return 0;
