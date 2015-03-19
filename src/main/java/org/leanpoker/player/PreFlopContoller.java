@@ -4,12 +4,15 @@ import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
 import com.wcs.poker.gamestate.Player;
 import java.util.List;
+import org.leanpoker.player.holecards.BigAces;
+import org.leanpoker.player.holecards.HighPairs;
+import org.leanpoker.player.holecards.MidPairs;
 
 /**
  *
  * @author SAVUAAP.PTE
  */
-class PreFlopContoller {
+public class PreFlopContoller {
 
     private GameState gameState;
     private com.wcs.poker.gamestate.Player currentPlayer;
@@ -33,7 +36,6 @@ class PreFlopContoller {
     public PreFlopContoller() {
     }
     
-    
     PreFlopContoller(GameState gameState) {
         this.gameState = gameState;
     }
@@ -41,7 +43,11 @@ class PreFlopContoller {
     int start() {
         divideUp();
         myPositionCat = whatPositionIhave();
-
+        
+        Integer bet=0;
+        bet+=new HighPairs().start();
+        bet=new BigAces().start();
+        bet=new MidPairs(currentHoleCards,gameState.getPlayers(),myPositionCat,this).start();
         return 0;
     }
 
@@ -78,8 +84,10 @@ class PreFlopContoller {
         return false;
     }
 
-    
-    
+    public boolean isPair(Card card1, Card card2){
+        if(card1.equals(card2))return true;
+        return false;
+        }
     
     
     

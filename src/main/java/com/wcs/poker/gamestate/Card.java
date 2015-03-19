@@ -3,6 +3,7 @@ package com.wcs.poker.gamestate;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
+import java.util.Objects;
 
 @Generated("org.jsonschema2pojo")
 public class Card {
@@ -20,6 +21,28 @@ public class Card {
     public Card(String rank, String suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.rank);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Card other = (Card) obj;
+        if (!Objects.equals(this.rank, other.rank)) {
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -58,4 +81,5 @@ public class Card {
         this.suit = suit;
     }
 
+    
 }
