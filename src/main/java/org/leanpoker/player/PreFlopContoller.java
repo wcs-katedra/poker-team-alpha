@@ -30,9 +30,8 @@ public class PreFlopContoller {
     private Integer currentPlayerLoc;
     private List<Player> players;
     private boolean everybodyFolded;
-
-    //private static final String[] RANKS = {"A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"};
-    //private static final String[] SUITS = {"spades", "clubs", "diamonds", "hearts"};
+    private Integer smallBlind;
+    private int folded;
 
     public PreFlopContoller() {
     }
@@ -61,7 +60,8 @@ public class PreFlopContoller {
         currentPlayerLoc=gameState.getInAction();
         currentPlayer = gameState.getPlayers().get(currentPlayerLoc);
         currentHoleCards = currentPlayer.getHoleCards();
-        bigBlind = gameState.getSmallBlind() * 2;
+        smallBlind=gameState.getSmallBlind();
+        bigBlind = smallBlind * 2;
         call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
         minimum_raise = call + gameState.getMinimumRaise();
         pot = gameState.getPot();
@@ -96,9 +96,9 @@ public class PreFlopContoller {
         return false;
         }
     
-     private Integer countExpectedPot() {
-         Integer expectedPot=gameState.getSmallBlind()*3;
-         Integer folded=0;
+     public Integer countExpectedPot() {
+         Integer expectedPot=smallBlind*3;
+         folded=0;
          for (int i = (currentDealerPosition+3)%playersNumber; i < currentPlayerLoc; i++) {
              if (players.get(i).getStatus().equals("active")) {
                  expectedPot+=bigBlind;
@@ -106,7 +106,7 @@ public class PreFlopContoller {
                  folded++;
              }
          }
-         if (expectedPot==(gameState.getSmallBlind()*3)){everybodyFolded=true;}
+         if (expectedPot==(smallBlind*3)){everybodyFolded=true;}
          return expectedPot;
     }
     
@@ -168,6 +168,22 @@ public class PreFlopContoller {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public Integer getExpectedPot() {
+        return expectedPot;
+    }
+
+    public boolean isEverybodyFolded() {
+        return everybodyFolded;
+    }
+
+    public Integer getSmallBlind() {
+        return smallBlind;
+    }
+
+    public int getFolded() {
+        return folded;
+    }
     
     
     
@@ -227,6 +243,22 @@ public class PreFlopContoller {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public void setExpectedPot(Integer expectedPot) {
+        this.expectedPot = expectedPot;
+    }
+
+    public void setEverybodyFolded(boolean everybodyFolded) {
+        this.everybodyFolded = everybodyFolded;
+    }
+
+    public void setSmallBlind(Integer smallBlind) {
+        this.smallBlind = smallBlind;
+    }
+
+    public void setFolded(int folded) {
+        this.folded = folded;
     }
 
    

@@ -6,6 +6,7 @@
 package org.leanpoker.player;
 
 import com.wcs.poker.gamestate.Card;
+import com.wcs.poker.gamestate.Player;
 import com.wcs.poker.gamestate.GameState;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,6 @@ public class PreFlopContollerIT {
     public void setUpClass() {
         preFlopController=new PreFlopContoller();
         gamestate=new GameState();
-        gamestate.setSmallBlind(10);
     }
     
     
@@ -44,19 +44,47 @@ public class PreFlopContollerIT {
     
     @Test
     public void testCountExpectedPot() {
-        List<com.wcs.poker.gamestate.Player> players=new ArrayList<>();
+        List<Player> players=new ArrayList<>();
         preFlopController.setCurrentDealerPosition(0);
-        preFlopController.setCurrentPlayerLoc(7);
-        com.wcs.poker.gamestate.Player player;
-        String[] statuses= {"active","folded","out"};
+        preFlopController.setCurrentPlayerLoc(9);
+        preFlopController.setBigBlind(20);
+        preFlopController.setSmallBlind(10);
+        Player player1,player2,player3;
         Random rand = new Random();
-        for (int i = 0; i < 10; i++) {
-            player=new com.wcs.poker.gamestate.Player();
-            player.setStatus(statuses[rand.nextInt(statuses.length)]);
-            players.add(player);
+        for (int i = 0; i < 3; i++) {
+            player1=new Player(i, "Dani", "active", "Default", 1000, 20);
+            players.add(player1);
+        }
+        for (int i = 0; i < 2; i++) {
+            player2=new Player(i, "Dávid", "folded", "Default", 1000, 0);
+            players.add(player2);
+            player1=new Player(i+1, "Erzsi", "active", "Default", 1000, 20);
+            players.add(player1);
+            player3=new Player(i+2, "Vince", "out", "Default", 1000, 0);
+            players.add(player3);
         }
         preFlopController.setPlayers(players);
         preFlopController.setPlayersNumber(players.size());
+        
+        assertTrue((30+2*20)==preFlopController.countExpectedPot());
+        assertFalse(preFlopController.isEverybodyFolded());
+        assertTrue(preFlopController.getFolded()==2);
+        
+        players.clear();
+        for (int i = 0; i < 3; i++) {
+            player1=new Player(i, "Dani", "active", "Default", 1000, 20);
+            players.add(player1);
+        }
+        for (int i = 0; i < 6; i++) {
+            player1=new Player(i, "Üres", "folded", "Default", 1000, 20);
+            players.add(player1);
+        }
+        preFlopController.setPlayers(players);
+        preFlopController.setPlayersNumber(players.size());
+        
+        assertTrue(30==preFlopController.countExpectedPot());
+        assertTrue(preFlopController.getFolded()==6);
+        assertTrue(preFlopController.isEverybodyFolded());
     }
     
     @Test
