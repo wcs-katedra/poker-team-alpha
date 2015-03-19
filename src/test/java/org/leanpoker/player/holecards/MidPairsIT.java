@@ -36,30 +36,36 @@ public class MidPairsIT {
     @Test
     public void testBetRequest() {
         midPairs.setMinimum_raise(1000);
+        midPairs.setCall(300);
         
         midPairs.setCard1(new Card("T", "spades"));
         midPairs.setCard2(new Card("T", "clubs"));
         midPairs.setMyPositionCat("Blinds");
+        midPairs.setWhatHappenedBeforeMe("Everybody folded");
         assertTrue(1000==midPairs.betRequest());
         
         midPairs.setCard1(new Card("J", "spades"));
         midPairs.setCard2(new Card("J", "clubs"));
         midPairs.setMyPositionCat("Mid");
-        assertTrue(1000==midPairs.betRequest());
+        midPairs.setWhatHappenedBeforeMe("Somebody raised");
+        assertTrue(300==midPairs.betRequest());
         
         midPairs.setCard1(new Card("9", "spades"));
         midPairs.setCard2(new Card("9", "clubs"));
         midPairs.setMyPositionCat("Late");
+        midPairs.setWhatHappenedBeforeMe("Somebody called");
         assertTrue(1000==midPairs.betRequest());
         
         midPairs.setCard1(new Card("9", "spades"));
         midPairs.setCard2(new Card("9", "clubs"));
         midPairs.setMyPositionCat("Early");
-        assertTrue(0==midPairs.betRequest());
+        midPairs.setWhatHappenedBeforeMe("Somebody raised");
+        assertTrue(300==midPairs.betRequest());
         
         midPairs.setCard1(new Card("Q", "spades"));
         midPairs.setCard2(new Card("T", "clubs"));
         midPairs.setMyPositionCat("Blinds");
+        midPairs.setWhatHappenedBeforeMe("Somebody raised");
         assertTrue(0==midPairs.betRequest());
     }
     
