@@ -18,50 +18,87 @@ import java.util.List;
  * @author SAVUAAP.PTE
  */
 public class MidPairs {
-    
-    private String pattern= "[JT9]";
-    
+
+    private String pattern = "[JT9]";
+
     private PreFlopContoller preFlopController;
     private List<Player> players;
-    private  String myPositionCat;
+    private String myPositionCat;
     private Card card1;
     private Card card2;
     private Integer minimum_raise;
-    
-    public MidPairs(){}
+    private String whatHappenedBeforeMe;
+    private Integer call;
 
-    public MidPairs(String myPositionCat,PreFlopContoller preFlopController) {
-        this.preFlopController=preFlopController;
-        this.players=players;
-        this.myPositionCat=myPositionCat;
+    public MidPairs() {
     }
-    
+
+    public MidPairs(String myPositionCat, String whatHappenedBeforeMe, PreFlopContoller preFlopController) {
+        this.preFlopController = preFlopController;
+        this.players = players;
+        this.myPositionCat = myPositionCat;
+        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    }
+
     public Integer start() {
         card1 = preFlopController.getCurrentHoleCards().get(0);
         card2 = preFlopController.getCurrentHoleCards().get(1);
-        minimum_raise=preFlopController.getMinimum_raise();
+        minimum_raise = preFlopController.getMinimum_raise();
+        call=preFlopController.getCall();
         return betRequest();
     }
-    
+
     public Integer betRequest() {
-        if (preFlopController.isPair(card1, card2) 
+        if (preFlopController.isPair(card1, card2)
                 && card1.getRank().matches(pattern)) {
-            switch (myPositionCat){
-                case "Blinds": return minimum_raise;
-                case "Early":return 0;
-                case "Mid":return minimum_raise;
-                case "Late":return minimum_raise;
-                default: return 0;
+            switch (myPositionCat) {
+                case "Blinds": {
+                    switch (whatHappenedBeforeMe) {
+                        case "Everybody folded":return minimum_raise;
+                        case "Somebody called":return minimum_raise;
+                        case "Somebody raised":return call;
+                    }
+                };
+                case "Early":{
+                    switch (whatHappenedBeforeMe) {
+                        case "Everybody folded":return 0;
+                        case "Somebody called":return minimum_raise;
+                        case "Somebody raised":return call;
+                    }
+                };
+                case "Mid":{
+                    switch (whatHappenedBeforeMe) {
+                        case "Everybody folded":return minimum_raise;
+                        case "Somebody called":return minimum_raise;
+                        case "Somebody raised":return call;
+                    }
+                };
+                case "Late":{
+                    switch (whatHappenedBeforeMe) {
+                        case "Everybody folded":return minimum_raise;
+                        case "Somebody called":return minimum_raise;
+                        case "Somebody raised":return call;
+                    }
+                };
+                default:
+                    return 0;
             }
         } else {
             return 0;
         }
     }
-    
-    
-    
+
     //getters
 
+    public String getWhatHappenedBeforeMe() {
+        return whatHappenedBeforeMe;
+    }
+
+    public Integer getCall() {
+        return call;
+    }
+    
+    
     public PreFlopContoller getPreFlopController() {
         return preFlopController;
     }
@@ -85,9 +122,8 @@ public class MidPairs {
     public Integer getMinimum_raise() {
         return minimum_raise;
     }
-    
-    //setters
 
+    //setters
     public void setPreFlopController(PreFlopContoller preFlopController) {
         this.preFlopController = preFlopController;
     }
@@ -112,7 +148,13 @@ public class MidPairs {
         this.minimum_raise = minimum_raise;
     }
 
-    
-    
+    public void setWhatHappenedBeforeMe(String whatHappenedBeforeMe) {
+        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    }
+
+    public void setCall(Integer call) {
+        this.call = call;
+    }
+
     
 }
