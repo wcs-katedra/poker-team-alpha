@@ -100,6 +100,10 @@ public class PreFlopContoller {
         return false;
         }
     
+    public boolean isTheSameSuit(Card card1,Card card2){
+        if(card1.getSuit().equals(card2.getSuit()))return true;
+        return false;
+    }
      public Integer countExpectedPot() {
          Integer expectedPot=smallBlind*3;
          folded=0;
