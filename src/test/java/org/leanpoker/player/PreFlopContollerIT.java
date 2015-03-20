@@ -43,6 +43,16 @@ public class PreFlopContollerIT {
     }
     
     @Test
+    public void testIsTheSameSuit() {
+        Card card1=new Card("A", "clubs");
+        Card card2=new Card("A", "spades");
+        assertFalse(preFlopController.isTheSameSuit(card1, card2));
+        
+        card1.setSuit("spades");
+        assertTrue(preFlopController.isTheSameSuit(card1, card2));
+    }
+    
+    @Test
     public void testWhatHappenedBefore() {
         preFlopController.setPot(1000);
         preFlopController.setSmallBlind(10);
