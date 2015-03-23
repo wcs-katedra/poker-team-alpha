@@ -50,17 +50,7 @@ public class SmallPairs {
                     }
                 }
                 ;
-                case "Mid": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return call;
-                        case "Somebody called":
-                            return call;
-                        case "Somebody raised":
-                            return call;
-                    }
-                }
-                ;
+                case "Mid": return call;
                 case "Late": {
                     switch (whatHappenedBeforeMe) {
                         case "Everybody folded":
@@ -72,17 +62,7 @@ public class SmallPairs {
                     }
                 }
                 ;
-                case "Blinds": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return call;
-                        case "Somebody called":
-                            return call;
-                        case "Somebody raised":
-                            return call;
-                    }
-                }
-                ;
+                case "Blinds": return call;
                 default:
                     return 0;
             }

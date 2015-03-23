@@ -50,11 +50,10 @@ public class SmallPairsIT {
     }
     
     @Test
-    public void pairOfSevensAtMiddlePositionRaised() {
+    public void pairOfSevensAtMiddlePosition() {
         smallPairs.setCard1(new Card("7", "hearts"));
         smallPairs.setCard2(new Card("7", "diamonds"));
         smallPairs.setMyPositionCat("Mid");
-        smallPairs.setWhatHappenedBeforeMe("Somebody raised");
         assertEquals((Integer)300, smallPairs.betRequest());
     }
     
@@ -72,7 +71,6 @@ public class SmallPairsIT {
         smallPairs.setCard1(new Card("8", "hearts"));
         smallPairs.setCard2(new Card("8", "spades"));
         smallPairs.setMyPositionCat("Blinds");
-        smallPairs.setWhatHappenedBeforeMe("Somebody raised");
         assertEquals((Integer)300, smallPairs.betRequest());
     }
 }
