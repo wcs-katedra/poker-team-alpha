@@ -4,9 +4,7 @@ import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
 import com.wcs.poker.gamestate.Player;
 import java.util.List;
-import org.leanpoker.player.holecards.BigAces;
-import org.leanpoker.player.holecards.HighPairs;
-import org.leanpoker.player.holecards.MidPairs;
+import org.leanpoker.player.holecards.*;
 
 /**
  *
@@ -52,7 +50,7 @@ public class PreFlopContoller {
         bet+=new HighPairs(this).start();
         bet+=new BigAces(this).start();
         bet+=new MidPairs(myPositionCat,whatHappenedBeforeMe,this).start();
-//        bet+=new SmallPairs().start();
+        bet+=new SmallPairs(myPositionCat,whatHappenedBeforeMe,this).start();
 //        bet+=new MidAces().start();
 //        bet+=new SuitedAces().start();
 //        bet+=new FaceCards().start();
