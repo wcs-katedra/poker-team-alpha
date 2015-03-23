@@ -51,7 +51,7 @@ public class PreFlopContoller {
         bet+=new BigAces(this).start();
         bet+=new MidPairs(myPositionCat,whatHappenedBeforeMe,this).start();
         bet+=new SmallPairs(myPositionCat,whatHappenedBeforeMe,this).start();
-//        bet+=new MidAces().start();
+        bet+=new MidAces(myPositionCat,whatHappenedBeforeMe,this).start();
 //        bet+=new SuitedAces().start();
 //        bet+=new FaceCards().start();
 //        bet+=new SuitedConnectors().start();
