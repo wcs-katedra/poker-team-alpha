@@ -53,7 +53,7 @@ public class PreFlopContoller {
         bet+=new SmallPairs(myPositionCat,whatHappenedBeforeMe,this).start();
         bet+=new MidAces(myPositionCat,whatHappenedBeforeMe,this).start();
 //        bet+=new SuitedAces().start();
-//        bet+=new FaceCards().start();
+        bet+=new FaceCards().start();
 //        bet+=new SuitedConnectors().start();
         return 0;
     }
