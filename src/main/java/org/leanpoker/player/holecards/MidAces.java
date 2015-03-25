@@ -33,8 +33,10 @@ public class MidAces {
     }
 
     public Integer betRequest() {
-        if (card1.getRank().equals("A")
-                && card2.getRank().matches(PATTERN)) {
+        if ((card1.getRank().equals("A")
+                && card2.getRank().matches(PATTERN))
+                || ( card1.getRank().matches(PATTERN)
+                && card2.getRank().equals("A"))) {
             switch (myPositionCat) {
                 case "Early": return 0;
                 case "Mid": {

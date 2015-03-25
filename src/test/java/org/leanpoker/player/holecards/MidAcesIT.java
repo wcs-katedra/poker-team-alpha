@@ -49,9 +49,9 @@ public class MidAcesIT {
     }
     
     @Test
-    public void AJMidPositionRaised() {
-        midAces.setCard1(new Card("A", "hearts"));
-        midAces.setCard2(new Card("J", "diamonds"));
+    public void JAMidPositionRaised() {
+        midAces.setCard1(new Card("J", "hearts"));
+        midAces.setCard2(new Card("A", "diamonds"));
         midAces.setMyPositionCat("Mid");
         midAces.setWhatHappenedBeforeMe("Somebody raised");
         assertEquals((Integer)0, midAces.betRequest());
