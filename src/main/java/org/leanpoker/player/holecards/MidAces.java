@@ -5,7 +5,7 @@ import org.leanpoker.player.PreFlopContoller;
 
 
 public class MidAces {
-    private static final String PATTERN = "[QJT]";
+    private static final String PATTERN = "[QJ]|10";
 
     private PreFlopContoller preFlopController;
     private String myPositionCat;

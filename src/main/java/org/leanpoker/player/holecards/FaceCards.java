@@ -5,7 +5,7 @@ import org.leanpoker.player.PreFlopContoller;
 
 public class FaceCards {
 
-    private static final String[] RANKS = {"K", "Q", "J", "T"};
+    private static final String[] RANKS = {"K", "Q", "J", "10"};
 
     private PreFlopContoller preFlopController;
     private String myPositionCat;

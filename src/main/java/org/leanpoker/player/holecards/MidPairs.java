@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class MidPairs {
 
-    private String pattern = "[JT9]";
+    private String pattern = "[J9]|10";
 
     private PreFlopContoller preFlopController;
     private List<Player> players;

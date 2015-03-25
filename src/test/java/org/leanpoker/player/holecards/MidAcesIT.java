@@ -42,7 +42,7 @@ public class MidAcesIT {
     @Test
     public void ATMidPositionFolded() {
         midAces.setCard1(new Card("A", "hearts"));
-        midAces.setCard2(new Card("T", "spades"));
+        midAces.setCard2(new Card("10", "spades"));
         midAces.setMyPositionCat("Mid");
         midAces.setWhatHappenedBeforeMe("Everybody folded");
         assertEquals((Integer)1000, midAces.betRequest());
@@ -69,7 +69,7 @@ public class MidAcesIT {
     @Test
     public void ATBlindCalled() {
         midAces.setCard1(new Card("A", "hearts"));
-        midAces.setCard2(new Card("T", "spades"));
+        midAces.setCard2(new Card("10", "spades"));
         midAces.setMyPositionCat("Blinds");
         midAces.setWhatHappenedBeforeMe("Somebody called");
         assertEquals((Integer)300, midAces.betRequest());

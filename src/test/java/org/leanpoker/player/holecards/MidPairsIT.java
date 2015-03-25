@@ -38,8 +38,8 @@ public class MidPairsIT {
         midPairs.setMinimum_raise(1000);
         midPairs.setCall(300);
         
-        midPairs.setCard1(new Card("T", "spades"));
-        midPairs.setCard2(new Card("T", "clubs"));
+        midPairs.setCard1(new Card("10", "spades"));
+        midPairs.setCard2(new Card("10", "clubs"));
         midPairs.setMyPositionCat("Blinds");
         midPairs.setWhatHappenedBeforeMe("Everybody folded");
         assertTrue(1000==midPairs.betRequest());
@@ -63,7 +63,7 @@ public class MidPairsIT {
         assertTrue(300==midPairs.betRequest());
         
         midPairs.setCard1(new Card("Q", "spades"));
-        midPairs.setCard2(new Card("T", "clubs"));
+        midPairs.setCard2(new Card("10", "clubs"));
         midPairs.setMyPositionCat("Blinds");
         midPairs.setWhatHappenedBeforeMe("Somebody raised");
         assertTrue(0==midPairs.betRequest());

@@ -15,7 +15,7 @@ import org.leanpoker.player.PreFlopContoller;
 public class SuitedConnectors {
     //private static final String PATTERN= "[98765432]";
     
-    private static final String[] Minta ={"J","T","9","8","7","6","5","4","3","2"};
+    private static final String[] Minta ={"J","10","9","8","7","6","5","4","3","2"};
     
     private PreFlopContoller preFlopController;
     private String myPositionCat;

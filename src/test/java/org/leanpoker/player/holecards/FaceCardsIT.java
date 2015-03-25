@@ -42,14 +42,14 @@ public class FaceCardsIT {
     @Test
     public void JTMidPosition() {
         faceCards.setCard1(new Card("J", "hearts"));
-        faceCards.setCard2(new Card("T", "spades"));
+        faceCards.setCard2(new Card("10", "spades"));
         faceCards.setMyPositionCat("Mid");
         assertEquals((Integer)0, faceCards.betRequest());
     }
     
     @Test
     public void TJLateFolded() {
-        faceCards.setCard1(new Card("T", "spades"));
+        faceCards.setCard1(new Card("10", "spades"));
         faceCards.setCard2(new Card("J", "diamonds"));
         faceCards.setMyPositionCat("Late");
         faceCards.setWhatHappenedBeforeMe("Everybody folded");
@@ -59,7 +59,7 @@ public class FaceCardsIT {
     @Test
     public void QTBlindCalled() {
         faceCards.setCard1(new Card("Q", "hearts"));
-        faceCards.setCard2(new Card("T", "spades"));
+        faceCards.setCard2(new Card("10", "spades"));
         faceCards.setMyPositionCat("Blinds");
         faceCards.setWhatHappenedBeforeMe("Somebody called");
         assertEquals((Integer)300, faceCards.betRequest());
@@ -67,7 +67,7 @@ public class FaceCardsIT {
     
     @Test
     public void TKBlindRaised() {
-        faceCards.setCard1(new Card("T", "hearts"));
+        faceCards.setCard1(new Card("10", "hearts"));
         faceCards.setCard2(new Card("K", "spades"));
         faceCards.setMyPositionCat("Blinds");
         faceCards.setWhatHappenedBeforeMe("Somebody raised");
