@@ -3,6 +3,7 @@ package org.leanpoker.player;
 import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
 import com.wcs.poker.gamestate.Player;
+import java.util.ArrayList;
 import java.util.List;
 import org.leanpoker.player.holecards.*;
 
@@ -34,97 +35,119 @@ public class PreFlopContoller {
     private int folded;
     private String whatHappenedBeforeMe;
 
+    private List<AbstractHand> handList;
+
     public PreFlopContoller() {
     }
-    
+
     PreFlopContoller(GameState gameState) {
         this.gameState = gameState;
     }
 
-    int start() {
+    int betRequest() {
         divideUp();
+        handList = new ArrayList<>();
         myPositionCat = whatPositionIhave();
         expectedPot = countExpectedPot();
-        whatHappenedBeforeMe=whatHappenedBeforeMe(expectedPot);
-        Integer bet=0;
-        bet+=new HighPairs(this).start();
-        bet+=new BigAces(this).start();
-        bet+=new MidPairs(myPositionCat,whatHappenedBeforeMe,this).start();
-        bet+=new SmallPairs(myPositionCat,whatHappenedBeforeMe,this).start();
-        bet+=new MidAces(myPositionCat,whatHappenedBeforeMe,this).start();
-//        bet+=new SuitedAces(myPositionCat,whatHappenedBeforeMe,this).start();
-        bet+=new FaceCards(myPositionCat,whatHappenedBeforeMe,this).start();
-        bet+=new SuitedConnectors(myPositionCat,whatHappenedBeforeMe,this).start();
-        return 0;
+        whatHappenedBeforeMe = whatHappenedBeforeMe(expectedPot);
+        addHands();
+
+        Integer bet = 0;
+
+        for (AbstractHand hand : handList) {
+            bet += hand.betRequest();
+        }
+
+        return bet;
     }
 
     private void divideUp() {
-        currentPlayerLoc=gameState.getInAction();
+        currentPlayerLoc = gameState.getInAction();
         currentPlayer = gameState.getPlayers().get(currentPlayerLoc);
         currentHoleCards = currentPlayer.getHoleCards();
-        smallBlind=gameState.getSmallBlind();
+        smallBlind = gameState.getSmallBlind();
         bigBlind = smallBlind * 2;
         call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
         minimum_raise = call + gameState.getMinimumRaise();
         pot = gameState.getPot();
         currentDealerPosition = gameState.getDealer();
-        players=gameState.getPlayers();
-        playersNumber=players.size();
+        players = gameState.getPlayers();
+        playersNumber = players.size();
+    }
+
+    private void addHands() {
+        handList.add(new HighPairs(this));
+        handList.add(new BigAces(this));
+        handList.add(new MidPairs(myPositionCat, whatHappenedBeforeMe, this));
+        handList.add(new SmallPairs(myPositionCat, whatHappenedBeforeMe, this));
+        handList.add(new MidAces(myPositionCat, whatHappenedBeforeMe, this));
+//      handList.add(new SuitedAces());
+        handList.add(new FaceCards(myPositionCat, whatHappenedBeforeMe, this));
+        handList.add(new SuitedConnectors(myPositionCat, whatHappenedBeforeMe, this));
     }
 
     public String whatPositionIhave() {
-        double relativPos = (double)currentPlayerLoc / playersNumber*100;
+        double relativPos = (double) currentPlayerLoc / playersNumber * 100;
 
-        if (amIblind()){return "Blinks";}
-        if (relativPos < middlePosition && relativPos!=0) {return "Early";}
-        if (relativPos > middlePosition 
-                && relativPos < latePosition) {return "Middle";}
+        if (amIblind()) {
+            return "Blinks";
+        }
+        if (relativPos < middlePosition && relativPos != 0) {
+            return "Early";
+        }
+        if (relativPos > middlePosition
+                && relativPos < latePosition) {
+            return "Middle";
+        }
         return "Late";
     }
 
     public boolean amIblind() {
-        Integer smallBlindLoc=(currentDealerPosition+1)%playersNumber;
-        Integer bigBlindLoc=(currentDealerPosition+2)%playersNumber;
-        
-        if(currentPlayerLoc==smallBlindLoc
-                ||currentPlayerLoc==bigBlindLoc){
-            return true;
-        }
-        return false;
+        Integer smallBlindLoc = (currentDealerPosition + 1) % playersNumber;
+        Integer bigBlindLoc = (currentDealerPosition + 2) % playersNumber;
+
+        return currentPlayerLoc == smallBlindLoc
+                || currentPlayerLoc == bigBlindLoc;
     }
 
-    public boolean isPair(Card card1, Card card2){
-        if(card1.equals(card2))return true;
-        return false;
+    public boolean isPair(Card card1, Card card2) {
+        return card1.equals(card2);
+    }
+
+    public boolean isTheSameSuit(Card card1, Card card2) {
+        return card1.getSuit().equals(card2.getSuit());
+    }
+
+    public Integer countExpectedPot() {
+        Integer expectedPot = smallBlind * 3;
+        folded = 0;
+        for (int i = (currentDealerPosition + 3) % playersNumber; i < currentPlayerLoc; i++) {
+            if (players.get(i).getStatus().equals("active")) {
+                expectedPot += bigBlind;
+            } else if (players.get(i).getStatus().equals("folded")) {
+                folded++;
+            }
         }
-    
-    public boolean isTheSameSuit(Card card1,Card card2){
-        if(card1.getSuit().equals(card2.getSuit()))return true;
-        return false;
+        if (expectedPot == (smallBlind * 3)) {
+            everybodyFolded = true;
+        }
+        return expectedPot;
     }
-     public Integer countExpectedPot() {
-         Integer expectedPot=smallBlind*3;
-         folded=0;
-         for (int i = (currentDealerPosition+3)%playersNumber; i < currentPlayerLoc; i++) {
-             if (players.get(i).getStatus().equals("active")) {
-                 expectedPot+=bigBlind;
-             } else if (players.get(i).getStatus().equals("folded")){
-                 folded++;
-             }
-         }
-         if (expectedPot==(smallBlind*3)){everybodyFolded=true;}
-         return expectedPot;
-    }
-    
-     public String whatHappenedBeforeMe(Integer expectedPot) {
-        if (everybodyFolded)return "Everybody folded";
-        if (expectedPot<pot) return "Somebody raised";
-        if (pot>3*smallBlind)return "Somebody called";
+
+    public String whatHappenedBeforeMe(Integer expectedPot) {
+        if (everybodyFolded) {
+            return "Everybody folded";
+        }
+        if (expectedPot < pot) {
+            return "Somebody raised";
+        }
+        if (pot > 3 * smallBlind) {
+            return "Somebody called";
+        }
         return "";
     }
-    
-    //getters
 
+    //getters
     public GameState getGameState() {
         return gameState;
     }
@@ -196,11 +219,8 @@ public class PreFlopContoller {
     public int getFolded() {
         return folded;
     }
-    
-    
-    
-    //setters
 
+    //setters
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }

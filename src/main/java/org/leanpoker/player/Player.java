@@ -7,7 +7,7 @@ public class Player {
     static final String VERSION = "Chuck Norris"; //mert legyőzhetetlen :D
 
     public static int betRequest(GameState gameState) {
-        return new PreFlopContoller(gameState).start();
+        return new PreFlopContoller(gameState).betRequest();
     }
 
     public static void showdown(GameState gameState) {
