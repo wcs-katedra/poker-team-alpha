@@ -17,7 +17,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class SmallPairsIT {
     private SmallPairs smallPairs;
-    private PreFlopContoller pfc;
+    private PreFlopContoller preFlopContoller;
     
     public SmallPairsIT() {
     }
@@ -25,9 +25,9 @@ public class SmallPairsIT {
     @Before
     public void setUp() {
         smallPairs = new SmallPairs();
-        pfc = new PreFlopContoller();
-        smallPairs.setPreFlopController(pfc);
-        smallPairs.setMinimum_raise(1000);
+        preFlopContoller = new PreFlopContoller();
+        smallPairs.setPreFlopController(preFlopContoller);
+        smallPairs.setMinimumRaise(1000);
         smallPairs.setCall(300);
     }
     
@@ -35,42 +35,42 @@ public class SmallPairsIT {
     public void pairOfFoursAtEarlyPosition() {
         smallPairs.setCard1(new Card("4", "hearts"));
         smallPairs.setCard2(new Card("4", "spades"));
-        smallPairs.setMyPositionCat("Early");
-        smallPairs.setWhatHappenedBeforeMe("Somebody raised");
-        assertEquals((Integer)300, smallPairs.betRequest());
+        smallPairs.setMyPositionCat(Position.EARLY);
+        smallPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertEquals(300, smallPairs.betRequest());
     }
     
     @Test
     public void pairOfFoursAtEarlyPositionFolded() {
         smallPairs.setCard1(new Card("4", "hearts"));
         smallPairs.setCard2(new Card("4", "spades"));
-        smallPairs.setMyPositionCat("Early");
-        smallPairs.setWhatHappenedBeforeMe("Everybody folded");
-        assertEquals((Integer)0, smallPairs.betRequest());
+        smallPairs.setMyPositionCat(Position.EARLY);
+        smallPairs.setWhatHappenedBeforeMe(BetEvent.EVERYBODY_FOLDED);
+        assertEquals(0, smallPairs.betRequest());
     }
     
     @Test
     public void pairOfSevensAtMiddlePosition() {
         smallPairs.setCard1(new Card("7", "hearts"));
         smallPairs.setCard2(new Card("7", "diamonds"));
-        smallPairs.setMyPositionCat("Mid");
-        assertEquals((Integer)300, smallPairs.betRequest());
+        smallPairs.setMyPositionCat(Position.MIDDLE);
+        assertEquals(300, smallPairs.betRequest());
     }
     
     @Test
     public void pairOfTwosAtLatePositionRaised() {
         smallPairs.setCard1(new Card("2", "spades"));
         smallPairs.setCard2(new Card("2", "diamonds"));
-        smallPairs.setMyPositionCat("Late");
-        smallPairs.setWhatHappenedBeforeMe("Somebody raised");
-        assertEquals((Integer)300, smallPairs.betRequest());
+        smallPairs.setMyPositionCat(Position.LATE);
+        smallPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertEquals(300, smallPairs.betRequest());
     }
     
     @Test
     public void pairOfEightsAtBlindPosition() {
         smallPairs.setCard1(new Card("8", "hearts"));
         smallPairs.setCard2(new Card("8", "spades"));
-        smallPairs.setMyPositionCat("Blinds");
-        assertEquals((Integer)300, smallPairs.betRequest());
+        smallPairs.setMyPositionCat(Position.BLINDS);
+        assertEquals(300, smallPairs.betRequest());
     }
 }

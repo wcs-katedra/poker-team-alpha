@@ -9,34 +9,27 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class BigAces extends AbstractHand{
     
-    private String pattern = "[AK]";
+    private static final String PATTERN = "[AK]";
 
     public BigAces(){}
     
-    public BigAces(PreFlopContoller pfc) {
-        super(pfc);
+    public BigAces(PreFlopContoller preFlopContoller) {
+        super(preFlopContoller);
     }
 
     @Override
-    public Integer betRequest() {
-        if(!preFlopController.isPair(card1, card2)
-                && card1.getRank().matches(pattern)
-                && card2.getRank().matches(pattern)){
-            return minimum_raise;
+    public boolean ruleIsApplicable() {
+        if(!card1.isPair(card2)
+                && card1.getRank().matches(PATTERN)
+                && card2.getRank().matches(PATTERN)) {
+            return true;
         }
-        return 0;
+        return false;
     }
     
-    //getters
-
-    public String getPattern() {
-        return pattern;
-    }
-    
-    //setters
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    @Override
+    public int betRequest() {
+        return minimumRaise;
     }
     
 }

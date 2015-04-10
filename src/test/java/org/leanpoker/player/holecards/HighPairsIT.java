@@ -25,37 +25,45 @@ public class HighPairsIT {
     
     @Before
     public void setUp() {
-        highPairs=new HighPairs();
-        preFlopController=new PreFlopContoller();
+        highPairs = new HighPairs();
+        preFlopController = new PreFlopContoller();
         highPairs.setPreFlopController(preFlopController);
+        highPairs.setMinimumRaise(100);
     }
 
-    /**
-     * Test of betRequest method, of class HighPairs.
-     */
     @Test
-    public void testBetRequest() {
-        highPairs.setMinimum_raise(100);
-        
+    public void testAA() {
         highPairs.setCard1(new Card("A","spades"));
         highPairs.setCard2(new Card("A","clubs"));
-        assertTrue(100==highPairs.betRequest());
-        
+        assertEquals(100, highPairs.betRequest());
+    }
+    
+    @Test
+    public void testKK() {
         highPairs.setCard1(new Card("K","spades"));
         highPairs.setCard2(new Card("K","clubs"));
-        assertTrue(100==highPairs.betRequest());
-        
+        assertEquals(100, highPairs.betRequest());
+    }
+    
+    @Test
+    public void testQQ() {
         highPairs.setCard1(new Card("Q","spades"));
         highPairs.setCard2(new Card("Q","clubs"));
-        assertTrue(100==highPairs.betRequest());
-        
+        assertEquals(100, highPairs.betRequest());
+    }
+    
+    @Test
+    public void testAQ() {
         highPairs.setCard1(new Card("A","spades"));
         highPairs.setCard2(new Card("Q","clubs"));
-        assertTrue(0==highPairs.betRequest());
-        
-        highPairs.setCard1(new Card("T","spades"));
+        assertFalse(highPairs.ruleIsApplicable());
+    }
+    
+    @Test
+    public void test10_9() {
+        highPairs.setCard1(new Card("10","spades"));
         highPairs.setCard2(new Card("9","clubs"));
-        assertTrue(0==highPairs.betRequest());
+        assertFalse(highPairs.ruleIsApplicable());
     }
 
 }

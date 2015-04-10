@@ -17,7 +17,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class FaceCardsIT {
     private FaceCards faceCards;
-    private PreFlopContoller pfc;
+    private PreFlopContoller preFlopContoller;
     
     public FaceCardsIT() {
     }
@@ -25,9 +25,9 @@ public class FaceCardsIT {
     @Before
     public void setUp() {
         faceCards = new FaceCards();
-        pfc = new PreFlopContoller();
-        faceCards.setPreFlopController(pfc);
-        faceCards.setMinimum_raise(1000);
+        preFlopContoller = new PreFlopContoller();
+        faceCards.setPreFlopController(preFlopContoller);
+        faceCards.setMinimumRaise(1000);
         faceCards.setCall(300);
     }
 
@@ -35,51 +35,51 @@ public class FaceCardsIT {
     public void KQAtEarlyPosition() {
         faceCards.setCard1(new Card("K", "hearts"));
         faceCards.setCard2(new Card("Q", "spades"));
-        faceCards.setMyPositionCat("Early");
-        assertEquals((Integer)0, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.EARLY);
+        assertEquals(0, faceCards.betRequest());
     }
     
     @Test
     public void JTMidPosition() {
         faceCards.setCard1(new Card("J", "hearts"));
         faceCards.setCard2(new Card("10", "spades"));
-        faceCards.setMyPositionCat("Mid");
-        assertEquals((Integer)0, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.MIDDLE);
+        assertEquals(0, faceCards.betRequest());
     }
     
     @Test
     public void TJLateFolded() {
         faceCards.setCard1(new Card("10", "spades"));
         faceCards.setCard2(new Card("J", "diamonds"));
-        faceCards.setMyPositionCat("Late");
-        faceCards.setWhatHappenedBeforeMe("Everybody folded");
-        assertEquals((Integer)1000, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.LATE);
+        faceCards.setWhatHappenedBeforeMe(BetEvent.EVERYBODY_FOLDED);
+        assertEquals(1000, faceCards.betRequest());
     }
     
     @Test
     public void QTBlindCalled() {
         faceCards.setCard1(new Card("Q", "hearts"));
         faceCards.setCard2(new Card("10", "spades"));
-        faceCards.setMyPositionCat("Blinds");
-        faceCards.setWhatHappenedBeforeMe("Somebody called");
-        assertEquals((Integer)300, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.BLINDS);
+        faceCards.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_CALLED);
+        assertEquals(300, faceCards.betRequest());
     }
     
     @Test
     public void TKBlindRaised() {
         faceCards.setCard1(new Card("10", "hearts"));
         faceCards.setCard2(new Card("K", "spades"));
-        faceCards.setMyPositionCat("Blinds");
-        faceCards.setWhatHappenedBeforeMe("Somebody raised");
-        assertEquals((Integer)0, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.BLINDS);
+        faceCards.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertEquals(0, faceCards.betRequest());
     }
     
     @Test
     public void otherCards() {
         faceCards.setCard1(new Card("Q", "hearts"));
         faceCards.setCard2(new Card("2", "spades"));
-        faceCards.setMyPositionCat("Blinds");
-        faceCards.setWhatHappenedBeforeMe("Somebody called");
-        assertEquals((Integer)0, faceCards.betRequest());
+        faceCards.setMyPositionCat(Position.BLINDS);
+        faceCards.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_CALLED);
+        assertFalse(faceCards.ruleIsApplicable());
     }
 }

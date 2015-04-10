@@ -14,6 +14,8 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.leanpoker.player.holecards.BetEvent;
+import org.leanpoker.player.holecards.Position;
 
 /**
  *
@@ -33,7 +35,6 @@ public class PreFlopContollerIT {
         gamestate=new GameState();
     }
     
-    
     /**
      * Test of start method, of class PreFlopContoller.
      */
@@ -43,35 +44,24 @@ public class PreFlopContollerIT {
     }
     
     @Test
-    public void testIsTheSameSuit() {
-        Card card1=new Card("A", "clubs");
-        Card card2=new Card("A", "spades");
-        assertFalse(preFlopController.isTheSameSuit(card1, card2));
-        
-        card1.setSuit("spades");
-        assertTrue(preFlopController.isTheSameSuit(card1, card2));
-    }
-    
-    @Test
     public void testWhatHappenedBefore() {
         preFlopController.setPot(1000);
         preFlopController.setSmallBlind(10);
         preFlopController.setEverybodyFolded(true);
         Integer expectedPot=500;
-        assertEquals("Everybody folded", preFlopController.whatHappenedBeforeMe(expectedPot));
+        assertEquals(BetEvent.EVERYBODY_FOLDED, preFlopController.whatHappenedBeforeMe(expectedPot));
         
         preFlopController.setPot(50);
         preFlopController.setSmallBlind(10);
         preFlopController.setEverybodyFolded(false);
         expectedPot=120;
-        assertEquals("Somebody called", preFlopController.whatHappenedBeforeMe(expectedPot));
+        assertEquals(BetEvent.SOMEBODY_CALLED, preFlopController.whatHappenedBeforeMe(expectedPot));
         
         preFlopController.setPot(1000);
         preFlopController.setSmallBlind(10);
         preFlopController.setEverybodyFolded(false);
         expectedPot=500;
-        assertEquals("Somebody raised", preFlopController.whatHappenedBeforeMe(expectedPot));
-        
+        assertEquals(BetEvent.SOMEBODY_RAISED, preFlopController.whatHappenedBeforeMe(expectedPot));
     }
     
     @Test
@@ -127,19 +117,19 @@ public class PreFlopContollerIT {
         preFlopController.setMiddlePosition(33);
         preFlopController.setLatePosition(66);
         
-        assertEquals("Blinks", preFlopController.whatPositionIhave());
+        assertEquals(Position.BLINDS, preFlopController.whatPositionIhave());
         preFlopController.setCurrentPlayerLoc(3);
-        assertEquals("Early", preFlopController.whatPositionIhave());
+        assertEquals(Position.EARLY, preFlopController.whatPositionIhave());
         preFlopController.setCurrentPlayerLoc(6);
-        assertEquals("Middle", preFlopController.whatPositionIhave());
+        assertEquals(Position.MIDDLE, preFlopController.whatPositionIhave());
         preFlopController.setCurrentPlayerLoc(8);
-        assertEquals("Late", preFlopController.whatPositionIhave());
+        assertEquals(Position.LATE, preFlopController.whatPositionIhave());
         preFlopController.setCurrentPlayerLoc(0);
-        assertEquals("Late", preFlopController.whatPositionIhave());
+        assertEquals(Position.LATE, preFlopController.whatPositionIhave());
     }
     
     @Test
-    public void testAmIblink() {
+    public void testAmIBlind() {
         preFlopController.setCurrentDealerPosition(0);
         preFlopController.setPlayersNumber(10);
         
@@ -149,14 +139,5 @@ public class PreFlopContollerIT {
         preFlopController.setCurrentPlayerLoc(3);
         assertFalse(preFlopController.amIblind());
     }
-    
-    @Test
-    public void testIsPair(){
-        Card card1=new Card("A", "clubs");
-        Card card2=new Card("A", "spades");
-        assertTrue(preFlopController.isPair(card1, card2));
-        
-        card1.setRank("Q");
-        assertFalse(preFlopController.isPair(card1, card2));
-    }
+
 }

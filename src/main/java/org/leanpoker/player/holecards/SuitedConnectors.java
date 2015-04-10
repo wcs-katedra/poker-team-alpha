@@ -11,58 +11,59 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author Pali
  */
-public class SuitedConnectors extends AbstractHand{
+public class SuitedConnectors extends AbstractHand {
     
-    private static final String[] Minta ={"J","10","9","8","7","6","5","4","3","2"};
+    private static final String[] MINTA ={"J","10","9","8","7","6","5","4","3","2"};
     
     public SuitedConnectors(){}
     
-    public SuitedConnectors(String myPositionCat, String whatHappenedBeforeMe, PreFlopContoller preFlopController) {
-        super(preFlopController);
-        this.myPositionCat = myPositionCat;
-        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    public SuitedConnectors(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+        super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 
     @Override
-    public Integer betRequest() {
-         if ((preFlopController.isTheSameSuit(card1, card2))
-               && checkIfTheCardsAreInOrder() == true) {
-            switch (myPositionCat) {
-                case "Early": return 0;
-                case "Mid": return 0;
-                case "Late": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return minimum_raise;
-                        case "Somebody called":
-                            return call;
-                        case "Somebody raised":
-                            return 0;
-                    }
-                }
-                ;
-                case "Blinds":{
+    public boolean ruleIsApplicable() {
+        if ((card1.isTheSameSuit(card2)) && checkIfTheCardsAreInOrder() == true) {
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public int betRequest() {
+        switch (myPositionCat) {
+            case EARLY: return 0;
+            case MIDDLE: return 0;
+            case LATE: {
                 switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return 0;
-                        case "Somebody called":
-                            return call;
-                        case "Somebody raised":
-                            return 0;
-                    }}
-                default:
-                    return 0;
+                    case EVERYBODY_FOLDED:
+                        return minimumRaise;
+                    case SOMEBODY_CALLED:
+                        return call;
+                    case SOMEBODY_RAISED:
+                        return 0;
+                }
             }
-        } else {
-            return 0;
+            case BLINDS:{
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return 0;
+                    case SOMEBODY_CALLED:
+                        return call;
+                    case SOMEBODY_RAISED:
+                        return 0;
+                }
+            }
+            default:
+                return 0;
         }
     }
-
+    
     private boolean checkIfTheCardsAreInOrder() {
-        for (int i = 0; i < Minta.length; i++) {
-            if (Minta[i+1]!=null) {
-                if ((card1.getRank().equals(Minta[i]) && card2.getRank().equals(Minta[i+1])) ||
-                    (card2.getRank().equals(Minta[i+1]) && card2.getRank().equals(Minta[i])))
+        for (int i = 0; i < MINTA.length; i++) {
+            if (MINTA[i+1]!=null) {
+                if ((card1.getRank().equals(MINTA[i]) && card2.getRank().equals(MINTA[i+1])) ||
+                    (card2.getRank().equals(MINTA[i+1]) && card2.getRank().equals(MINTA[i])))
                         return true;
             }
         }

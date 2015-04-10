@@ -12,8 +12,13 @@ package org.leanpoker.player.holecards;
 public class SuitedAces extends AbstractHand{
 
     @Override
-    public Integer betRequest() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean ruleIsApplicable() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    @Override
+    public int betRequest() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

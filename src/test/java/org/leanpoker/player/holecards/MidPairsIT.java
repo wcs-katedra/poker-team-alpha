@@ -28,46 +28,53 @@ public class MidPairsIT {
         midPairs=new MidPairs();
         preFlopController=new PreFlopContoller();
         midPairs.setPreFlopController(preFlopController);
+        midPairs.setMinimumRaise(1000);
+        midPairs.setCall(300);
     }
 
-    /**
-     * Test of start method, of class MidPairs.
-     */
     @Test
-    public void testBetRequest() {
-        midPairs.setMinimum_raise(1000);
-        midPairs.setCall(300);
-        
+    public void testTTBlindFolded() {
         midPairs.setCard1(new Card("10", "spades"));
         midPairs.setCard2(new Card("10", "clubs"));
-        midPairs.setMyPositionCat("Blinds");
-        midPairs.setWhatHappenedBeforeMe("Everybody folded");
+        midPairs.setMyPositionCat(Position.BLINDS);
+        midPairs.setWhatHappenedBeforeMe(BetEvent.EVERYBODY_FOLDED);
         assertTrue(1000==midPairs.betRequest());
-        
-        midPairs.setCard1(new Card("J", "spades"));
-        midPairs.setCard2(new Card("J", "clubs"));
-        midPairs.setMyPositionCat("Mid");
-        midPairs.setWhatHappenedBeforeMe("Somebody raised");
-        assertTrue(300==midPairs.betRequest());
-        
-        midPairs.setCard1(new Card("9", "spades"));
-        midPairs.setCard2(new Card("9", "clubs"));
-        midPairs.setMyPositionCat("Late");
-        midPairs.setWhatHappenedBeforeMe("Somebody called");
-        assertTrue(1000==midPairs.betRequest());
-        
-        midPairs.setCard1(new Card("9", "spades"));
-        midPairs.setCard2(new Card("9", "clubs"));
-        midPairs.setMyPositionCat("Early");
-        midPairs.setWhatHappenedBeforeMe("Somebody raised");
-        assertTrue(300==midPairs.betRequest());
-        
-        midPairs.setCard1(new Card("Q", "spades"));
-        midPairs.setCard2(new Card("10", "clubs"));
-        midPairs.setMyPositionCat("Blinds");
-        midPairs.setWhatHappenedBeforeMe("Somebody raised");
-        assertTrue(0==midPairs.betRequest());
     }
     
+    @Test
+    public void testJJMidRaised() {
+        midPairs.setCard1(new Card("J", "spades"));
+        midPairs.setCard2(new Card("J", "clubs"));
+        midPairs.setMyPositionCat(Position.MIDDLE);
+        midPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertTrue(300==midPairs.betRequest());
+    }
     
+    @Test
+    public void test99LateCalled() {
+        midPairs.setCard1(new Card("9", "spades"));
+        midPairs.setCard2(new Card("9", "clubs"));
+        midPairs.setMyPositionCat(Position.LATE);
+        midPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_CALLED);
+        assertTrue(1000==midPairs.betRequest());
+    }
+    
+    @Test
+    public void test99EarlyRaised() {
+        midPairs.setCard1(new Card("9", "spades"));
+        midPairs.setCard2(new Card("9", "clubs"));
+        midPairs.setMyPositionCat(Position.EARLY);
+        midPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertTrue(300==midPairs.betRequest());
+    }
+    
+    @Test
+    public void testQTBlindRaised() {
+        midPairs.setCard1(new Card("Q", "spades"));
+        midPairs.setCard2(new Card("10", "clubs"));
+        midPairs.setMyPositionCat(Position.BLINDS);
+        midPairs.setWhatHappenedBeforeMe(BetEvent.SOMEBODY_RAISED);
+        assertFalse(midPairs.ruleIsApplicable());
+    }
+
 }

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 public class Player {
 
     @Expose
-    private Integer id;
+    private int id;
     @Expose
     private String name;
     @Expose
@@ -19,16 +19,16 @@ public class Player {
     @Expose
     private String version;
     @Expose
-    private Integer stack;
+    private int stack;
     @Expose
-    private Integer bet;
+    private int bet;
     @SerializedName("hole_cards")
     @Expose
     private List<Card> holeCards = new ArrayList<Card>();
 
     public Player(){};
     
-    public Player(Integer id, String name, String status, String version, Integer stack, Integer bet) {
+    public Player(int id, String name, String status, String version, int stack, int bet) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -42,7 +42,7 @@ public class Player {
      * @return
      *     The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class Player {
      * @param id
      *     The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -114,7 +114,7 @@ public class Player {
      * @return
      *     The stack
      */
-    public Integer getStack() {
+    public int getStack() {
         return stack;
     }
 
@@ -123,7 +123,7 @@ public class Player {
      * @param stack
      *     The stack
      */
-    public void setStack(Integer stack) {
+    public void setStack(int stack) {
         this.stack = stack;
     }
 
@@ -132,7 +132,7 @@ public class Player {
      * @return
      *     The bet
      */
-    public Integer getBet() {
+    public int getBet() {
         return bet;
     }
 
@@ -141,7 +141,7 @@ public class Player {
      * @param bet
      *     The bet
      */
-    public void setBet(Integer bet) {
+    public void setBet(int bet) {
         this.bet = bet;
     }
 

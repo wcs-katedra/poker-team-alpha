@@ -17,23 +17,31 @@ public abstract class AbstractHand {
     protected PreFlopContoller preFlopController;
     protected Card card1;
     protected Card card2;
-    protected Integer minimum_raise;
-    protected Integer call;
-    protected String myPositionCat;
-    protected String whatHappenedBeforeMe;
+    protected int minimumRaise;
+    protected int call;
+    protected Position myPositionCat;
+    protected BetEvent whatHappenedBeforeMe;
 
     public AbstractHand() {
     }
 
     public AbstractHand(PreFlopContoller preFlopContoller) {
-        this.preFlopController=preFlopContoller;
+        this.preFlopController = preFlopContoller;
         card1 = preFlopController.getCurrentHoleCards().get(0);
         card2 = preFlopController.getCurrentHoleCards().get(1);
-        minimum_raise = preFlopController.getMinimum_raise();
+        minimumRaise = preFlopController.getMinimumRaise();
         call = preFlopController.getCall();
     }
+
+    public AbstractHand(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+        this(preFlopController);
+        this.myPositionCat = myPositionCat;
+        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    }
     
-    public abstract Integer betRequest();
+    public abstract boolean ruleIsApplicable();
+    
+    public abstract int betRequest();
     
     //getters
 
@@ -49,19 +57,19 @@ public abstract class AbstractHand {
         return card2;
     }
 
-    public Integer getMinimum_raise() {
-        return minimum_raise;
+    public int getMinimumRaise() {
+        return minimumRaise;
     }
 
-    public String getMyPositionCat() {
+    public Position getMyPositionCat() {
         return myPositionCat;
     }
 
-    public String getWhatHappenedBeforeMe() {
+    public BetEvent getWhatHappenedBeforeMe() {
         return whatHappenedBeforeMe;
     }
 
-    public Integer getCall() {
+    public int getCall() {
         return call;
     }
         
@@ -79,19 +87,19 @@ public abstract class AbstractHand {
         this.card2 = card2;
     }
 
-    public void setMinimum_raise(Integer minimum_raise) {
-        this.minimum_raise = minimum_raise;
+    public void setMinimumRaise(int minimumRaise) {
+        this.minimumRaise = minimumRaise;
     }
 
-    public void setMyPositionCat(String myPositionCat) {
+    public void setMyPositionCat(Position myPositionCat) {
         this.myPositionCat = myPositionCat;
     }
 
-    public void setWhatHappenedBeforeMe(String whatHappenedBeforeMe) {
+    public void setWhatHappenedBeforeMe(BetEvent whatHappenedBeforeMe) {
         this.whatHappenedBeforeMe = whatHappenedBeforeMe;
     }
 
-    public void setCall(Integer call) {
+    public void setCall(int call) {
         this.call = call;
     }
     

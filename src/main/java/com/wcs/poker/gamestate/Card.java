@@ -23,6 +23,14 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isPair(Card card2) {
+        return equals(card2);
+    }
+
+    public boolean isTheSameSuit(Card card2) {
+        return suit.equals(card2.getSuit());
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

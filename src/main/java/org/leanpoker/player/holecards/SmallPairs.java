@@ -12,46 +12,45 @@ public class SmallPairs extends AbstractHand{
     public SmallPairs() {
     }
 
-    public SmallPairs(String myPositionCat, String whatHappenedBeforeMe, PreFlopContoller preFlopController) {
-        super(preFlopController);
-        this.myPositionCat = myPositionCat;
-        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    public SmallPairs(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+        super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 
     @Override
-    public Integer betRequest() {
-        if (preFlopController.isPair(card1, card2)
-                && card1.getRank().matches(PATTERN)) {
-            switch (myPositionCat) {
-                case "Early": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return 0;
-                        case "Somebody called":
-                            return 0;
-                        case "Somebody raised":
-                            return call;
-                    }
+    public boolean ruleIsApplicable() {
+        if (card1.isPair(card2) && card1.getRank().matches(PATTERN)) {
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public int betRequest() {
+        switch (myPositionCat) {
+            case EARLY: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return 0;
+                    case SOMEBODY_CALLED:
+                        return 0;
+                    case SOMEBODY_RAISED:
+                        return call;
                 }
-                ;
-                case "Mid": return call;
-                case "Late": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":
-                            return minimum_raise;
-                        case "Somebody called":
-                            return call;
-                        case "Somebody raised":
-                            return call;
-                    }
-                }
-                ;
-                case "Blinds": return call;
-                default:
-                    return 0;
             }
-        } else {
-            return 0;
+            case MIDDLE: return call;
+            case LATE: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return minimumRaise;
+                    case SOMEBODY_CALLED:
+                        return call;
+                    case SOMEBODY_RAISED:
+                        return call;
+                }
+            }
+            case BLINDS: return call;
+            default:
+                return 0;
         }
     }
 

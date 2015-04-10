@@ -12,22 +12,22 @@ public class GameState {
 
     @SerializedName("small_blind")
     @Expose
-    private Integer smallBlind;
+    private int smallBlind;
     @SerializedName("current_buy_in")
     @Expose
-    private Integer currentBuyIn;
+    private int currentBuyIn;
     @Expose
-    private Integer pot;
+    private int pot;
     @SerializedName("minimum_raise")
     @Expose
-    private Integer minimumRaise;
+    private int minimumRaise;
     @Expose
-    private Integer dealer;
+    private int dealer;
     @Expose
-    private Integer orbits;
+    private int orbits;
     @SerializedName("in_action")
     @Expose
-    private Integer inAction;
+    private int inAction;
     @Expose
     private List<Player> players = new ArrayList<Player>();
     @SerializedName("community_cards")
@@ -39,7 +39,7 @@ public class GameState {
      * @return
      *     The smallBlind
      */
-    public Integer getSmallBlind() {
+    public int getSmallBlind() {
         return smallBlind;
     }
 
@@ -48,7 +48,7 @@ public class GameState {
      * @param smallBlind
      *     The small_blind
      */
-    public void setSmallBlind(Integer smallBlind) {
+    public void setSmallBlind(int smallBlind) {
         this.smallBlind = smallBlind;
     }
 
@@ -57,7 +57,7 @@ public class GameState {
      * @return
      *     The currentBuyIn
      */
-    public Integer getCurrentBuyIn() {
+    public int getCurrentBuyIn() {
         return currentBuyIn;
     }
 
@@ -66,7 +66,7 @@ public class GameState {
      * @param currentBuyIn
      *     The current_buy_in
      */
-    public void setCurrentBuyIn(Integer currentBuyIn) {
+    public void setCurrentBuyIn(int currentBuyIn) {
         this.currentBuyIn = currentBuyIn;
     }
 
@@ -75,7 +75,7 @@ public class GameState {
      * @return
      *     The pot
      */
-    public Integer getPot() {
+    public int getPot() {
         return pot;
     }
 
@@ -84,7 +84,7 @@ public class GameState {
      * @param pot
      *     The pot
      */
-    public void setPot(Integer pot) {
+    public void setPot(int pot) {
         this.pot = pot;
     }
 
@@ -93,7 +93,7 @@ public class GameState {
      * @return
      *     The minimumRaise
      */
-    public Integer getMinimumRaise() {
+    public int getMinimumRaise() {
         return minimumRaise;
     }
 
@@ -102,7 +102,7 @@ public class GameState {
      * @param minimumRaise
      *     The minimum_raise
      */
-    public void setMinimumRaise(Integer minimumRaise) {
+    public void setMinimumRaise(int minimumRaise) {
         this.minimumRaise = minimumRaise;
     }
 
@@ -111,7 +111,7 @@ public class GameState {
      * @return
      *     The dealer
      */
-    public Integer getDealer() {
+    public int getDealer() {
         return dealer;
     }
 
@@ -120,7 +120,7 @@ public class GameState {
      * @param dealer
      *     The dealer
      */
-    public void setDealer(Integer dealer) {
+    public void setDealer(int dealer) {
         this.dealer = dealer;
     }
 
@@ -129,7 +129,7 @@ public class GameState {
      * @return
      *     The orbits
      */
-    public Integer getOrbits() {
+    public int getOrbits() {
         return orbits;
     }
 
@@ -138,7 +138,7 @@ public class GameState {
      * @param orbits
      *     The orbits
      */
-    public void setOrbits(Integer orbits) {
+    public void setOrbits(int orbits) {
         this.orbits = orbits;
     }
 
@@ -147,7 +147,7 @@ public class GameState {
      * @return
      *     The inAction
      */
-    public Integer getInAction() {
+    public int getInAction() {
         return inAction;
     }
 
@@ -156,7 +156,7 @@ public class GameState {
      * @param inAction
      *     The in_action
      */
-    public void setInAction(Integer inAction) {
+    public void setInAction(int inAction) {
         this.inAction = inAction;
     }
 

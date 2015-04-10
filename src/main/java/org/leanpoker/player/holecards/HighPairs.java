@@ -9,33 +9,25 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class HighPairs extends AbstractHand{
     
-    private String pattern = "[AKQ]";
+    private static final String PATTERN = "[AKQ]";
 
     public HighPairs(){}
     
-    public HighPairs(PreFlopContoller pfc) {
-        super(pfc);
+    public HighPairs(PreFlopContoller preFlopContoller) {
+        super(preFlopContoller);
+    }
+    
+    @Override
+    public boolean ruleIsApplicable() {
+        if(card1.isPair(card2) && card1.getRank().matches(PATTERN)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public Integer betRequest() {
-        if(preFlopController.isPair(card1, card2)
-                && card1.getRank().matches(pattern)){
-            return minimum_raise;
-        }
-        return 0;
-    }
-    
-    //getters
-
-    public String getPattern() {
-        return pattern;
-    }
-    
-    //setters
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    public int betRequest() {
+        return minimumRaise;
     }
     
 }

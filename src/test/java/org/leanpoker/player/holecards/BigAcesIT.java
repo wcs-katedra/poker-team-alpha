@@ -19,45 +19,51 @@ public class BigAcesIT {
     
     private PreFlopContoller preFlopController;
     private BigAces bigAces;
+    
     public BigAcesIT() {
     }
     
     @Before
     public void setUp() {
-        bigAces=new BigAces();
-        preFlopController=new PreFlopContoller();
+        bigAces = new BigAces();
+        preFlopController = new PreFlopContoller();
         bigAces.setPreFlopController(preFlopController);
+        bigAces.setMinimumRaise(100);
     }
 
-
-    /**
-     * Test of betRequest method, of class BigAces.
-     */
     @Test
-    public void testBetRequest() {
-        bigAces.setMinimum_raise(100);
-        
+    public void testAK() {
         bigAces.setCard1(new Card("A","spades"));
         bigAces.setCard2(new Card("K","clubs"));
-        assertTrue(100==bigAces.betRequest());
-        
+        assertEquals(100, bigAces.betRequest());
+    }
+    
+    @Test
+    public void testKA() {
         bigAces.setCard1(new Card("K","spades"));
         bigAces.setCard2(new Card("A","clubs"));
-        assertTrue(100==bigAces.betRequest());
-        
+        assertEquals(100, bigAces.betRequest());
+    }
+    
+    @Test
+    public void testKK() {
         bigAces.setCard1(new Card("K","spades"));
         bigAces.setCard2(new Card("K","clubs"));
-        assertTrue(0==bigAces.betRequest());
-        
+        assertFalse(bigAces.ruleIsApplicable());
+    }
+    
+    @Test
+    public void testAA() {
         bigAces.setCard1(new Card("A","spades"));
         bigAces.setCard2(new Card("A","clubs"));
-        assertTrue(0==bigAces.betRequest());
-        
+        assertFalse(bigAces.ruleIsApplicable());
+    }
+    
+    @Test
+    public void testA3() {
         bigAces.setCard1(new Card("A","spades"));
         bigAces.setCard2(new Card("3","clubs"));
-        assertTrue(0==bigAces.betRequest());
+        assertFalse(bigAces.ruleIsApplicable());
     }
 
-    
-    
 }

@@ -16,24 +16,24 @@ public class PreFlopContoller {
     private GameState gameState;
     private com.wcs.poker.gamestate.Player currentPlayer;
     private List<Card> currentHoleCards;
-    private Integer bigBlind;
-    private Integer call;
-    private Integer minimum_raise;
-    private Integer pot;
-    private Integer currentDealerPosition;
-    private Integer expectedPot;
+    private int bigBlind;
+    private int call;
+    private int minimumRaise;
+    private int pot;
+    private int currentDealerPosition;
+    private int expectedPot;
 
-    private String myPositionCat;
+    private Position myPositionCat;
 
-    private Integer middlePosition = 45;
-    private Integer latePosition = 70;
+    private int middlePosition = 45;
+    private int latePosition = 70;
     private int playersNumber;
-    private Integer currentPlayerLoc;
+    private int currentPlayerLoc;
     private List<Player> players;
     private boolean everybodyFolded;
-    private Integer smallBlind;
+    private int smallBlind;
     private int folded;
-    private String whatHappenedBeforeMe;
+    private BetEvent whatHappenedBeforeMe;
 
     private List<AbstractHand> handList;
 
@@ -44,7 +44,7 @@ public class PreFlopContoller {
         this.gameState = gameState;
     }
 
-    int betRequest() {
+    public int betRequest() {
         divideUp();
         handList = new ArrayList<>();
         myPositionCat = whatPositionIhave();
@@ -52,10 +52,12 @@ public class PreFlopContoller {
         whatHappenedBeforeMe = whatHappenedBeforeMe(expectedPot);
         addHands();
 
-        Integer bet = 0;
+        int bet = 0;
 
         for (AbstractHand hand : handList) {
-            bet += hand.betRequest();
+            if (hand.ruleIsApplicable()) {
+                bet = hand.betRequest();
+            }
         }
 
         return bet;
@@ -68,7 +70,7 @@ public class PreFlopContoller {
         smallBlind = gameState.getSmallBlind();
         bigBlind = smallBlind * 2;
         call = gameState.getCurrentBuyIn() - currentPlayer.getBet();
-        minimum_raise = call + gameState.getMinimumRaise();
+        minimumRaise = call + gameState.getMinimumRaise();
         pot = gameState.getPot();
         currentDealerPosition = gameState.getDealer();
         players = gameState.getPlayers();
@@ -78,48 +80,40 @@ public class PreFlopContoller {
     private void addHands() {
         handList.add(new HighPairs(this));
         handList.add(new BigAces(this));
-        handList.add(new MidPairs(myPositionCat, whatHappenedBeforeMe, this));
-        handList.add(new SmallPairs(myPositionCat, whatHappenedBeforeMe, this));
-        handList.add(new MidAces(myPositionCat, whatHappenedBeforeMe, this));
-//      handList.add(new SuitedAces());
-        handList.add(new FaceCards(myPositionCat, whatHappenedBeforeMe, this));
-        handList.add(new SuitedConnectors(myPositionCat, whatHappenedBeforeMe, this));
+        handList.add(new MidPairs(this, myPositionCat, whatHappenedBeforeMe));
+        handList.add(new SmallPairs(this, myPositionCat, whatHappenedBeforeMe));
+        handList.add(new MidAces(this, myPositionCat, whatHappenedBeforeMe));
+//      handList.add(new SuitedAces(this, myPositionCat, whatHappenedBeforeMe));
+        handList.add(new FaceCards(this, myPositionCat, whatHappenedBeforeMe));
+        handList.add(new SuitedConnectors(this, myPositionCat, whatHappenedBeforeMe));
     }
 
-    public String whatPositionIhave() {
+    public Position whatPositionIhave() {
         double relativPos = (double) currentPlayerLoc / playersNumber * 100;
 
         if (amIblind()) {
-            return "Blinks";
+            return Position.BLINDS;
         }
         if (relativPos < middlePosition && relativPos != 0) {
-            return "Early";
+            return Position.EARLY;
         }
         if (relativPos > middlePosition
                 && relativPos < latePosition) {
-            return "Middle";
+            return Position.MIDDLE;
         }
-        return "Late";
+        return Position.LATE;
     }
 
     public boolean amIblind() {
-        Integer smallBlindLoc = (currentDealerPosition + 1) % playersNumber;
-        Integer bigBlindLoc = (currentDealerPosition + 2) % playersNumber;
+        int smallBlindLoc = (currentDealerPosition + 1) % playersNumber;
+        int bigBlindLoc = (currentDealerPosition + 2) % playersNumber;
 
         return currentPlayerLoc == smallBlindLoc
                 || currentPlayerLoc == bigBlindLoc;
     }
 
-    public boolean isPair(Card card1, Card card2) {
-        return card1.equals(card2);
-    }
-
-    public boolean isTheSameSuit(Card card1, Card card2) {
-        return card1.getSuit().equals(card2.getSuit());
-    }
-
-    public Integer countExpectedPot() {
-        Integer expectedPot = smallBlind * 3;
+    public int countExpectedPot() {
+        int expectedPot = smallBlind * 3;
         folded = 0;
         for (int i = (currentDealerPosition + 3) % playersNumber; i < currentPlayerLoc; i++) {
             if (players.get(i).getStatus().equals("active")) {
@@ -134,17 +128,17 @@ public class PreFlopContoller {
         return expectedPot;
     }
 
-    public String whatHappenedBeforeMe(Integer expectedPot) {
+    public BetEvent whatHappenedBeforeMe(int expectedPot) {
         if (everybodyFolded) {
-            return "Everybody folded";
+            return BetEvent.EVERYBODY_FOLDED;
         }
         if (expectedPot < pot) {
-            return "Somebody raised";
+            return BetEvent.SOMEBODY_RAISED;
         }
         if (pot > 3 * smallBlind) {
-            return "Somebody called";
+            return BetEvent.SOMEBODY_CALLED;
         }
-        return "";
+        return null;
     }
 
     //getters
@@ -160,35 +154,35 @@ public class PreFlopContoller {
         return currentHoleCards;
     }
 
-    public Integer getBigBlind() {
+    public int getBigBlind() {
         return bigBlind;
     }
 
-    public Integer getCall() {
+    public int getCall() {
         return call;
     }
 
-    public Integer getMinimum_raise() {
-        return minimum_raise;
+    public int getMinimumRaise() {
+        return minimumRaise;
     }
 
-    public Integer getPot() {
+    public int getPot() {
         return pot;
     }
 
-    public Integer getCurrentDealerPosition() {
+    public int getCurrentDealerPosition() {
         return currentDealerPosition;
     }
 
-    public String getMyPositionCat() {
+    public Position getMyPositionCat() {
         return myPositionCat;
     }
 
-    public Integer getMiddlePosition() {
+    public int getMiddlePosition() {
         return middlePosition;
     }
 
-    public Integer getLatePosition() {
+    public int getLatePosition() {
         return latePosition;
     }
 
@@ -196,7 +190,7 @@ public class PreFlopContoller {
         return playersNumber;
     }
 
-    public Integer getCurrentPlayerLoc() {
+    public int getCurrentPlayerLoc() {
         return currentPlayerLoc;
     }
 
@@ -204,7 +198,7 @@ public class PreFlopContoller {
         return players;
     }
 
-    public Integer getExpectedPot() {
+    public int getExpectedPot() {
         return expectedPot;
     }
 
@@ -212,7 +206,7 @@ public class PreFlopContoller {
         return everybodyFolded;
     }
 
-    public Integer getSmallBlind() {
+    public int getSmallBlind() {
         return smallBlind;
     }
 
@@ -233,35 +227,35 @@ public class PreFlopContoller {
         this.currentHoleCards = currentHoleCards;
     }
 
-    public void setBigBlind(Integer bigBlind) {
+    public void setBigBlind(int bigBlind) {
         this.bigBlind = bigBlind;
     }
 
-    public void setCall(Integer call) {
+    public void setCall(int call) {
         this.call = call;
     }
 
-    public void setMinimum_raise(Integer minimum_raise) {
-        this.minimum_raise = minimum_raise;
+    public void setMinimumRaise(int minimumRaise) {
+        this.minimumRaise = minimumRaise;
     }
 
-    public void setPot(Integer pot) {
+    public void setPot(int pot) {
         this.pot = pot;
     }
 
-    public void setCurrentDealerPosition(Integer currentDealerPosition) {
+    public void setCurrentDealerPosition(int currentDealerPosition) {
         this.currentDealerPosition = currentDealerPosition;
     }
 
-    public void setMyPositionCat(String myPositionCat) {
+    public void setMyPositionCat(Position myPositionCat) {
         this.myPositionCat = myPositionCat;
     }
 
-    public void setMiddlePosition(Integer middlePosition) {
+    public void setMiddlePosition(int middlePosition) {
         this.middlePosition = middlePosition;
     }
 
-    public void setLatePosition(Integer latePosition) {
+    public void setLatePosition(int latePosition) {
         this.latePosition = latePosition;
     }
 
@@ -269,7 +263,7 @@ public class PreFlopContoller {
         this.playersNumber = playersNumber;
     }
 
-    public void setCurrentPlayerLoc(Integer currentPlayerLoc) {
+    public void setCurrentPlayerLoc(int currentPlayerLoc) {
         this.currentPlayerLoc = currentPlayerLoc;
     }
 
@@ -277,7 +271,7 @@ public class PreFlopContoller {
         this.players = players;
     }
 
-    public void setExpectedPot(Integer expectedPot) {
+    public void setExpectedPot(int expectedPot) {
         this.expectedPot = expectedPot;
     }
 
@@ -285,7 +279,7 @@ public class PreFlopContoller {
         this.everybodyFolded = everybodyFolded;
     }
 
-    public void setSmallBlind(Integer smallBlind) {
+    public void setSmallBlind(int smallBlind) {
         this.smallBlind = smallBlind;
     }
 

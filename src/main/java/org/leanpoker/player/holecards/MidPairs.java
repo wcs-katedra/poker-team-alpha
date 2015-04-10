@@ -11,57 +11,70 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author SAVUAAP.PTE
  */
-public class MidPairs extends AbstractHand{
+public class MidPairs extends AbstractHand {
 
-    private String pattern = "[J9]|10";
+    private static final String PATTERN = "[J9]|10";
 
     public MidPairs() {
     }
 
-    public MidPairs(String myPositionCat, String whatHappenedBeforeMe, PreFlopContoller preFlopController) {
-        super(preFlopController);
-        this.myPositionCat = myPositionCat;
-        this.whatHappenedBeforeMe = whatHappenedBeforeMe;
+    public MidPairs(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+        super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 
     @Override
-    public Integer betRequest() {
-        if (preFlopController.isPair(card1, card2)
-                && card1.getRank().matches(pattern)) {
-            switch (myPositionCat) {
-                case "Blinds": {
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":return minimum_raise;
-                        case "Somebody called":return minimum_raise;
-                        case "Somebody raised":return call;
-                    }
-                };
-                case "Early":{
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":return 0;
-                        case "Somebody called":return minimum_raise;
-                        case "Somebody raised":return call;
-                    }
-                };
-                case "Mid":{
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":return minimum_raise;
-                        case "Somebody called":return minimum_raise;
-                        case "Somebody raised":return call;
-                    }
-                };
-                case "Late":{
-                    switch (whatHappenedBeforeMe) {
-                        case "Everybody folded":return minimum_raise;
-                        case "Somebody called":return minimum_raise;
-                        case "Somebody raised":return call;
-                    }
-                };
-                default:
-                    return 0;
+    public boolean ruleIsApplicable() {
+        if (card1.isPair(card2) && card1.getRank().matches(PATTERN)) {
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public int betRequest() {
+        switch (myPositionCat) {
+            case BLINDS: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return minimumRaise;
+                    case SOMEBODY_CALLED:
+                        return minimumRaise;
+                    case SOMEBODY_RAISED:
+                        return call;
+                }
             }
-        } else {
-            return 0;
+            case EARLY: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return 0;
+                    case SOMEBODY_CALLED:
+                        return minimumRaise;
+                    case SOMEBODY_RAISED:
+                        return call;
+                }
+            }
+            case MIDDLE: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return minimumRaise;
+                    case SOMEBODY_CALLED:
+                        return minimumRaise;
+                    case SOMEBODY_RAISED:
+                        return call;
+                }
+            }
+            case LATE: {
+                switch (whatHappenedBeforeMe) {
+                    case EVERYBODY_FOLDED:
+                        return minimumRaise;
+                    case SOMEBODY_CALLED:
+                        return minimumRaise;
+                    case SOMEBODY_RAISED:
+                        return call;
+                }
+            }
+            default:
+                return 0;
         }
     }
     
