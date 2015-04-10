@@ -60,10 +60,10 @@ public class SuitedConnectors extends AbstractHand{
 
     private boolean checkIfTheCardsAreInOrder() {
         for (int i = 0; i < Minta.length; i++) {
-            if (card1.getRank().equals(Minta[i])) {
-                if (card2.getRank().equals(Minta[i-1]) || card2.getRank().equals(Minta[i+1])) {
-                    return true;
-                }
+            if (Minta[i+1]!=null) {
+                if ((card1.getRank().equals(Minta[i]) && card2.getRank().equals(Minta[i+1])) ||
+                    (card2.getRank().equals(Minta[i+1]) && card2.getRank().equals(Minta[i])))
+                        return true;
             }
         }
         return false; 
