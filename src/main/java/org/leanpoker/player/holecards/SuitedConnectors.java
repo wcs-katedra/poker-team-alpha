@@ -13,7 +13,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class SuitedConnectors extends AbstractHand {
     
-    private static final String[] MINTA ={"J","10","9","8","7","6","5","4","3","2"};
+    private static final String[] MINTA ={"J","10","9","8","7","6","5","4"};
     
     public SuitedConnectors(){}
     
@@ -23,10 +23,7 @@ public class SuitedConnectors extends AbstractHand {
 
     @Override
     public boolean ruleIsApplicable() {
-        if ((card1.isTheSameSuit(card2)) && checkIfTheCardsAreInOrder() == true) {
-            return true;
-        }
-        return false;
+        return card1.isTheSameSuit(card2) && checkIfTheCardsAreInOrder();
     }
     
     @Override
@@ -44,7 +41,7 @@ public class SuitedConnectors extends AbstractHand {
                         return 0;
                 }
             }
-            case BLINDS:{
+            case BLINDS: {
                 switch (whatHappenedBeforeMe) {
                     case EVERYBODY_FOLDED:
                         return 0;
@@ -60,11 +57,11 @@ public class SuitedConnectors extends AbstractHand {
     }
     
     private boolean checkIfTheCardsAreInOrder() {
-        for (int i = 0; i < MINTA.length; i++) {
-            if (MINTA[i+1]!=null) {
-                if ((card1.getRank().equals(MINTA[i]) && card2.getRank().equals(MINTA[i+1])) ||
-                    (card2.getRank().equals(MINTA[i+1]) && card2.getRank().equals(MINTA[i])))
-                        return true;
+        System.out.println(MINTA.length);
+        for (int i = 0; i < MINTA.length - 1; i++) {
+            if ((card1.getRank().equals(MINTA[i]) && card2.getRank().equals(MINTA[i+1])) ||
+                (card2.getRank().equals(MINTA[i]) && card1.getRank().equals(MINTA[i+1]))) {
+                    return true;
             }
         }
         return false; 

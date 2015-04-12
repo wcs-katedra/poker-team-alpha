@@ -15,11 +15,11 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author Péter
  */
-public class FaceCardsIT {
+public class FaceCardsTest {
     private FaceCards faceCards;
     private PreFlopContoller preFlopContoller;
     
-    public FaceCardsIT() {
+    public FaceCardsTest() {
     }
     
     @Before

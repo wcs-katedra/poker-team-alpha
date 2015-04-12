@@ -15,12 +15,12 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author SAVUAAP.PTE
  */
-public class HighPairsIT {
+public class HighPairsTest {
     
     private HighPairs highPairs;
     private PreFlopContoller preFlopController;
     
-    public HighPairsIT() {
+    public HighPairsTest() {
     }
     
     @Before

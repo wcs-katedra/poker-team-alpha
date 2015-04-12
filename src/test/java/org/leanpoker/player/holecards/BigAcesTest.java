@@ -15,12 +15,12 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author SAVUAAP.PTE
  */
-public class BigAcesIT {
+public class BigAcesTest {
     
     private PreFlopContoller preFlopController;
     private BigAces bigAces;
     
-    public BigAcesIT() {
+    public BigAcesTest() {
     }
     
     @Before

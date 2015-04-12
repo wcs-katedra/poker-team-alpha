@@ -21,12 +21,12 @@ import org.leanpoker.player.holecards.Position;
  *
  * @author SAVUAAP.PTE
  */
-public class PreFlopContollerIT {
+public class PreFlopContollerTest {
     
     PreFlopContoller preFlopController;
     GameState gamestate;
     
-    public PreFlopContollerIT() {
+    public PreFlopContollerTest() {
     }
     
     @Before

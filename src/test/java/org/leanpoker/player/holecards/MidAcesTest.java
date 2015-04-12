@@ -15,11 +15,11 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author Péter
  */
-public class MidAcesIT {
+public class MidAcesTest {
     private MidAces midAces;
     private PreFlopContoller preFlopContoller;
     
-    public MidAcesIT() {
+    public MidAcesTest() {
     }
     
     @Before

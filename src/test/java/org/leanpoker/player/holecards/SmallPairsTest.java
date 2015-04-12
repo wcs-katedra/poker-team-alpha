@@ -15,11 +15,11 @@ import org.leanpoker.player.PreFlopContoller;
  *
  * @author Péter
  */
-public class SmallPairsIT {
+public class SmallPairsTest {
     private SmallPairs smallPairs;
     private PreFlopContoller preFlopContoller;
     
-    public SmallPairsIT() {
+    public SmallPairsTest() {
     }
     
     @Before
