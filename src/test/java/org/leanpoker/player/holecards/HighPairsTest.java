@@ -60,7 +60,7 @@ public class HighPairsTest {
     }
     
     @Test
-    public void test10_9() {
+    public void testT9() {
         highPairs.setCard1(new Card("10","spades"));
         highPairs.setCard2(new Card("9","clubs"));
         assertFalse(highPairs.ruleIsApplicable());

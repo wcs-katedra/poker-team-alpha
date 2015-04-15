@@ -83,7 +83,7 @@ public class PreFlopContoller {
         handList.add(new MidPairs(this, myPositionCat, whatHappenedBeforeMe));
         handList.add(new SmallPairs(this, myPositionCat, whatHappenedBeforeMe));
         handList.add(new MidAces(this, myPositionCat, whatHappenedBeforeMe));
-//      handList.add(new SuitedAces(this, myPositionCat, whatHappenedBeforeMe));
+        handList.add(new SuitedAces(this, myPositionCat, whatHappenedBeforeMe));
         handList.add(new FaceCards(this, myPositionCat, whatHappenedBeforeMe));
         handList.add(new SuitedConnectors(this, myPositionCat, whatHappenedBeforeMe));
     }
