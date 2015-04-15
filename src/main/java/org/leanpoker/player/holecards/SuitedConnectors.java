@@ -14,6 +14,7 @@ import org.leanpoker.player.PreFlopContoller;
 public class SuitedConnectors extends AbstractHand {
     
     private static final String[] MINTA ={"J","10","9","8","7","6","5","4"};
+    private static final String PATTERN = "[J987654]|10";
     
     public SuitedConnectors(){}
     
@@ -29,28 +30,34 @@ public class SuitedConnectors extends AbstractHand {
     @Override
     public int betRequest() {
         switch (myPositionCat) {
-            case EARLY: return 0;
+            case EARLY:
             case MIDDLE: return 0;
-            case LATE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
-            case BLINDS: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return 0;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
+            case LATE: return betForLate();
+            case BLINDS: return betForBlinds();
+            default:
+                return 0;
+        }
+    }
+
+    private int betForBlinds() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return 0;
+            case SOMEBODY_CALLED:
+                return call;
+            case SOMEBODY_RAISED:
+            default:
+                return 0;
+        }
+    }
+
+    private int betForLate() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return call;
+            case SOMEBODY_RAISED:
             default:
                 return 0;
         }

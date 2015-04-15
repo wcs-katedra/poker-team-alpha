@@ -29,53 +29,41 @@ public class MidPairs extends AbstractHand {
         }
         return false;
     }
-    
+
     @Override
     public int betRequest() {
         switch (myPositionCat) {
-            case BLINDS: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return minimumRaise;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
-            case EARLY: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return 0;
-                    case SOMEBODY_CALLED:
-                        return minimumRaise;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
-            case MIDDLE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return minimumRaise;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
-            case LATE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return minimumRaise;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
-            default:
-                return 0;
+            case BLINDS: 
+            case MIDDLE:
+            case LATE:
+                return betByEvent();
+            case EARLY: return betForEarly();
+            default: return 0;
         }
     }
-    
+
+    private int betForEarly() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return 0;
+            case SOMEBODY_CALLED:
+                return minimumRaise;
+            case SOMEBODY_RAISED:
+                return call;
+            default: return 0;
+        }
+    }
+
+    private int betByEvent() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return minimumRaise;
+            case SOMEBODY_RAISED:
+                return call;
+            default: return 0;
+        }
+    }
+
 }

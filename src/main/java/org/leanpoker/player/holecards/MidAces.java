@@ -25,38 +25,34 @@ public class MidAces extends AbstractHand{
     public int betRequest() {
         switch (myPositionCat) {
             case EARLY: return 0;
-            case MIDDLE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
-            case LATE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return minimumRaise;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
-            case BLINDS: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
+            case LATE: return betForLate();
+            case MIDDLE:
+            case BLINDS: return betForMiddleAndBlinds();
             default:
                 return 0;
+        }
+    }
+
+    private int betForLate() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return minimumRaise;
+            case SOMEBODY_RAISED:
+            default:
+                return 0;
+        }
+    }
+
+    private int betForMiddleAndBlinds() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return call;
+            case SOMEBODY_RAISED:
+            default: return 0;
         }
     }
 }

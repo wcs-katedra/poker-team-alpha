@@ -35,18 +35,22 @@ public class FaceCards extends AbstractHand{
             case MIDDLE: 
                 return 0;
             case LATE:
-            case BLINDS: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return 0;
-                }
-            }
+            case BLINDS: 
+                return betForLateAndBlinds();
             default:
                 return 0;
+        }
+    }
+
+    private int betForLateAndBlinds() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return call;
+            case SOMEBODY_RAISED:
+                return 0;
+            default: return 0;
         }
     }
 }

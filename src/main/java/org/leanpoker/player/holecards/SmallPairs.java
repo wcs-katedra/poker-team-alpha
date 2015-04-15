@@ -27,30 +27,35 @@ public class SmallPairs extends AbstractHand{
     @Override
     public int betRequest() {
         switch (myPositionCat) {
-            case EARLY: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return 0;
-                    case SOMEBODY_CALLED:
-                        return 0;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
+            case EARLY: return betForEarly();
             case MIDDLE: return call;
-            case LATE: {
-                switch (whatHappenedBeforeMe) {
-                    case EVERYBODY_FOLDED:
-                        return minimumRaise;
-                    case SOMEBODY_CALLED:
-                        return call;
-                    case SOMEBODY_RAISED:
-                        return call;
-                }
-            }
+            case LATE: return betForLate();
             case BLINDS: return call;
-            default:
+            default: return 0;
+        }
+    }
+
+    private int betForLate() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+                return minimumRaise;
+            case SOMEBODY_CALLED:
+                return call;
+            case SOMEBODY_RAISED:
+                return call;
+            default: return 0;
+        }
+    }
+
+    private int betForEarly() {
+        switch (whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
                 return 0;
+            case SOMEBODY_CALLED:
+                return 0;
+            case SOMEBODY_RAISED:
+                return call;
+            default: return 0;
         }
     }
 
