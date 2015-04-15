@@ -28,8 +28,8 @@ public class SmallPairs extends AbstractHand{
     public int betRequest() {
         switch (myPositionCat) {
             case EARLY: return betForEarly();
-            case MIDDLE: return call;
             case LATE: return betForLate();
+            case MIDDLE:
             case BLINDS: return call;
             default: return 0;
         }
@@ -40,7 +40,6 @@ public class SmallPairs extends AbstractHand{
             case EVERYBODY_FOLDED:
                 return minimumRaise;
             case SOMEBODY_CALLED:
-                return call;
             case SOMEBODY_RAISED:
                 return call;
             default: return 0;

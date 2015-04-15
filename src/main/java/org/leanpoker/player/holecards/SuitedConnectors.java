@@ -14,7 +14,6 @@ import org.leanpoker.player.PreFlopContoller;
 public class SuitedConnectors extends AbstractHand {
     
     private static final String[] MINTA ={"J","10","9","8","7","6","5","4"};
-    private static final String PATTERN = "[J987654]|10";
     
     public SuitedConnectors(){}
     
@@ -41,10 +40,9 @@ public class SuitedConnectors extends AbstractHand {
 
     private int betForBlinds() {
         switch (whatHappenedBeforeMe) {
-            case EVERYBODY_FOLDED:
-                return 0;
             case SOMEBODY_CALLED:
                 return call;
+            case EVERYBODY_FOLDED:
             case SOMEBODY_RAISED:
             default:
                 return 0;
@@ -64,7 +62,6 @@ public class SuitedConnectors extends AbstractHand {
     }
     
     private boolean checkIfTheCardsAreInOrder() {
-        System.out.println(MINTA.length);
         for (int i = 0; i < MINTA.length - 1; i++) {
             if ((card1.getRank().equals(MINTA[i]) && card2.getRank().equals(MINTA[i+1])) ||
                 (card2.getRank().equals(MINTA[i]) && card1.getRank().equals(MINTA[i+1]))) {

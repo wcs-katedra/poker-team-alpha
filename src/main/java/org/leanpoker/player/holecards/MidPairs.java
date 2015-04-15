@@ -44,12 +44,11 @@ public class MidPairs extends AbstractHand {
 
     private int betForEarly() {
         switch (whatHappenedBeforeMe) {
-            case EVERYBODY_FOLDED:
-                return 0;
             case SOMEBODY_CALLED:
                 return minimumRaise;
             case SOMEBODY_RAISED:
                 return call;
+            case EVERYBODY_FOLDED:
             default: return 0;
         }
     }
@@ -57,7 +56,6 @@ public class MidPairs extends AbstractHand {
     private int betByEvent() {
         switch (whatHappenedBeforeMe) {
             case EVERYBODY_FOLDED:
-                return minimumRaise;
             case SOMEBODY_CALLED:
                 return minimumRaise;
             case SOMEBODY_RAISED:

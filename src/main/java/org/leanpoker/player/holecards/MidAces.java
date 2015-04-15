@@ -36,7 +36,6 @@ public class MidAces extends AbstractHand{
     private int betForLate() {
         switch (whatHappenedBeforeMe) {
             case EVERYBODY_FOLDED:
-                return minimumRaise;
             case SOMEBODY_CALLED:
                 return minimumRaise;
             case SOMEBODY_RAISED:

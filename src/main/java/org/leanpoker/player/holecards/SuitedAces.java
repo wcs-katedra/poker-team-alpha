@@ -5,20 +5,60 @@
  */
 package org.leanpoker.player.holecards;
 
+import org.leanpoker.player.PreFlopContoller;
+
 /**
  *
  * @author Pali
  */
 public class SuitedAces extends AbstractHand{
+    
+    public static final String PATTERN = "[98765432]";
+
+    public SuitedAces() {
+    }
+
+    public SuitedAces(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+        super(preFlopController, myPositionCat, whatHappenedBeforeMe);
+    }
 
     @Override
     public boolean ruleIsApplicable() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (card1.isTheSameSuit(card2) && 
+           (card1.getRank().equals("A")) || card2.getRank().equals("A") &&
+           (card2.getRank().matches(PATTERN)) || card1.getRank().matches(PATTERN)) {
+            return true;
+        }
+        return false;
     }
     
     @Override
     public int betRequest() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (myPositionCat) {
+            case EARLY: return 0;
+            case BLINDS:
+            case MIDDLE: return betForBlindsAndMiddle();
+            case LATE: return betForLate();
+            default: return 0;
+        }
+    }
+
+    private int betForBlindsAndMiddle() {
+        switch(whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED: return minimumRaise;
+            case SOMEBODY_CALLED: return call;
+            case SOMEBODY_RAISED:
+            default: return 0;
+        }
+    }
+
+    private int betForLate() {
+        switch(whatHappenedBeforeMe) {
+            case EVERYBODY_FOLDED:
+            case SOMEBODY_CALLED: return minimumRaise;
+            case SOMEBODY_RAISED:
+            default: return 0;
+        }
     }
 
 }

@@ -31,12 +31,11 @@ public class FaceCards extends AbstractHand{
     @Override
     public int betRequest() {
         switch (myPositionCat) {
-            case EARLY:
-            case MIDDLE: 
-                return 0;
             case LATE:
             case BLINDS: 
                 return betForLateAndBlinds();
+            case EARLY:
+            case MIDDLE: 
             default:
                 return 0;
         }
@@ -49,7 +48,6 @@ public class FaceCards extends AbstractHand{
             case SOMEBODY_CALLED:
                 return call;
             case SOMEBODY_RAISED:
-                return 0;
             default: return 0;
         }
     }
