@@ -63,8 +63,8 @@ public class SuitedAcesTest {
     
     @Test
     public void testOtherCards() {
-        suitedAces.setCard1(new Card("K", "spades"));
-        suitedAces.setCard2(new Card("10", "clubs"));
+        suitedAces.setCard1(new Card("2", "clubs"));
+        suitedAces.setCard2(new Card("3", "clubs"));
         suitedAces.setMyPositionCat(Position.LATE);
         suitedAces.setWhatHappenedBeforeMe(BetEvent.EVERYBODY_FOLDED);
         assertFalse(suitedAces.ruleIsApplicable());

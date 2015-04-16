@@ -25,8 +25,8 @@ public class SuitedAces extends AbstractHand{
     @Override
     public boolean ruleIsApplicable() {
         if (card1.isTheSameSuit(card2) && 
-           (card1.getRank().equals("A")) || card2.getRank().equals("A") &&
-           (card2.getRank().matches(PATTERN)) || card1.getRank().matches(PATTERN)) {
+           ((card1.getRank().equals("A") && card2.getRank().matches(PATTERN)) ||
+           (card2.getRank().equals("A") && card1.getRank().matches(PATTERN)))) {
             return true;
         }
         return false;
