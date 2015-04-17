@@ -56,7 +56,7 @@ public class PreFlopContoller {
 
         for (AbstractHand hand : handList) {
             if (hand.ruleIsApplicable()) {
-                bet = hand.betRequest();
+                bet += hand.betRequest();
             }
         }
 
