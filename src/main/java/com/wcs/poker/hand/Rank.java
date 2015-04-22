@@ -11,5 +11,21 @@ package com.wcs.poker.hand;
  * @author poker01
  */
 public enum Rank {
-    A,K,Q,J,_10,_9,_8,_7,_6,_5,_4,_3,_2;
+    A("A"),K("K"),Q("Q"),J("J"),TEN("10"),NINE("9"),EIGHT("8"),SEVEN("7"),
+    SIX("6"),FIVE("5"),FOUR("4"),THREE("3"),TWO("2");
+    
+    String value;
+    
+    private Rank(String value) {
+        this.value=value;
+    }
+    
+    public static Rank getRank(String rankString) {
+        for (Rank rank : values()) {
+            if (rankString.equals(rank.value)) {
+                return rank;
+            }
+        }
+        return null;
+    }
 }

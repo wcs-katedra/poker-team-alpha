@@ -3,10 +3,11 @@ package com.wcs.poker.gamestate;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
+import com.wcs.poker.hand.Rank;
 import java.util.Objects;
 
 @Generated("org.jsonschema2pojo")
-public class Card {
+public class Card implements Comparable<Card>{
 
     @Expose
     private String rank;
@@ -53,6 +54,10 @@ public class Card {
         return true;
     }
     
+    public Rank getRankEnum() {
+        return Rank.getRank(rank);
+    }
+    
     /**
      * 
      * @return
@@ -87,6 +92,11 @@ public class Card {
      */
     public void setSuit(String suit) {
         this.suit = suit;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        return getRankEnum().compareTo(o.getRankEnum());
     }
 
     
