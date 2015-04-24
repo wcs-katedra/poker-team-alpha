@@ -1,7 +1,6 @@
 package com.wcs.poker.hand;
 
 import com.wcs.poker.gamestate.Card;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
