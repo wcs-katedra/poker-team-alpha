@@ -95,7 +95,7 @@ public class HandRankingServiceTest {
         assertThat(hand.getRank(), Is.is(HandRank.STRAIGHT));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("straightHand.json")));
     }
-    @Ignore
+//    @Ignore
     @Test
     public void testEvaulateThreeOfAKind() throws Exception {
         Hand hand = handRankingService.evaulate(loadCards("threeOfAKindTestDataSet.json"));
