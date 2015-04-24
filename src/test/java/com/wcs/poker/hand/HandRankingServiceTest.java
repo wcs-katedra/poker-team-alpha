@@ -121,6 +121,7 @@ public class HandRankingServiceTest {
         assertThat(hand.getCards(), Is.is((Collection) loadCards("pairHand.json")));
     }
     
+//    @Ignore
     @Test
     public void testEvaulateHighCard() throws Exception {
         Hand hand = handRankingService.evaulate(loadCards("highCardDataSet.json"));

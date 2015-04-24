@@ -1,6 +1,7 @@
 package com.wcs.poker.hand;
 
 import com.wcs.poker.gamestate.Card;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class HandRankingService {
         this.loadCards = loadCards;
         Collections.sort(loadCards);
         evaulateHighCard();
-//        evaulatePair();
+        evaulatePair();
 //        evaulateTwoPair();
 //        evaulateThreeOfKind();
 //        evaulateStraight();
@@ -35,24 +36,40 @@ public class HandRankingService {
         handRank = HandRank.HIGH_CARD;
     }
 
-    
     private void evaulatePair() {
         for (int i = 0; i < loadCards.size(); i++) {
-            Card card0=loadCards.get(i);
-            for (int j = i+1; j < loadCards.size(); j++) {
-                Card card1=loadCards.get(j);
-                if (card0.isPair(card1)) {
-                    handRank=HandRank.PAIR;
-                    
+            Card card0 = loadCards.get(i);
+            try {
+                for (int j = -1; j <= 1; j += 2) {
+                    Card card1 = loadCards.get(i+j);
+                    if (card0.isPair(card1)) {
+                        handRank = HandRank.PAIR;
+                        removeElement(card1);
+                        removeElement(card0);
+                        return;
+                    }
+                }
+            }catch(Exception ex){}
+        }
+    }
+
+    private void removeElement(Card card) {
+        for (int i = 0; i < loadCards.size(); i++) {
+            if (loadCards.get(i).equals(card)) {
+                if (loadCards.get(i).getSuit().equals(card.getSuit())) {
+                    loadCards.remove(i);
+                    break;
                 }
             }
         }
+        loadCards.add(0, card);
     }
-    
+
     private void resizeLoadCards() {
         loadCards.subList(5, loadCards.size()).clear();
     }
 //------------------------------------------------------------------------------
+
     private Hand straightHand(List<Card> loadCards) {
         Collections.sort(loadCards);
         Card previousCard = null;
@@ -73,5 +90,4 @@ public class HandRankingService {
         return previousCard.getRankEnum().ordinal() + 1 == card.getRankEnum().ordinal();
     }
 
-    
 }
