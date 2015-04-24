@@ -54,6 +54,11 @@ public class Card implements Comparable<Card>{
         return true;
     }
     
+    @Override
+    public int compareTo(Card o) {
+        return getRankEnum().compareTo(o.getRankEnum());
+    }
+    
     public Rank getRankEnum() {
         return Rank.getRank(rank);
     }
@@ -94,10 +99,7 @@ public class Card implements Comparable<Card>{
         this.suit = suit;
     }
 
-    @Override
-    public int compareTo(Card o) {
-        return getRankEnum().compareTo(o.getRankEnum());
-    }
+    
 
     
 }
