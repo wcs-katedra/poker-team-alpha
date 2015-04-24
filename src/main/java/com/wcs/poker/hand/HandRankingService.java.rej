@@ -1,29 +1,10 @@
 diff a/src/main/java/com/wcs/poker/hand/HandRankingService.java b/src/main/java/com/wcs/poker/hand/HandRankingService.java	(rejected hunks)
-@@ -44,25 +44,8 @@
-                     Card card1 = loadCards.get(i+j);
-                     if (card0.isPair(card1)) {
-                         handRank = HandRank.PAIR;
--                        relocateElement(card0,0);
--                        relocateElement(card1,1);
--                        return;
--                    }
--                }
--            }catch(Exception ex){}
--        }
--    }
--    
--    private void evaulateTwoPair() {
--        for (int i = 0+2; i < loadCards.size(); i++) {
--            Card card0 = loadCards.get(i);
--            try {
--                for (int j = -1; j <= 1; j += 2) {
--                    Card card1 = loadCards.get(i+j);
--                    if (card0.isPair(card1)) {
--                        handRank = HandRank.TWO_PAIRS;
--                        relocateElement(card0,2);
--                        relocateElement(card1,3);
-+                        removeElement(card1);
-+                        removeElement(card0);
-                         return;
-                     }
-                 }
+@@ -18,7 +18,7 @@
+         Collections.sort(loadCards);
+         evaulateHighCard();
+         evaulatePair();
+-        evaulateTwoPair();
++//        evaulateTwoPair();
+ //        evaulateThreeOfKind();
+ //        evaulateStraight();
+ //        evaulateFlush();

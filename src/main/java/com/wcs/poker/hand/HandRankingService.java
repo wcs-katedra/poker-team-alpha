@@ -18,7 +18,7 @@ public class HandRankingService {
         Collections.sort(loadCards);
         evaulateHighCard();
         evaulatePair();
-//        evaulateTwoPair();
+        evaulateTwoPair();
 //        evaulateThreeOfKind();
 //        evaulateStraight();
 //        evaulateFlush();
@@ -43,8 +43,25 @@ public class HandRankingService {
                     Card card1 = loadCards.get(i+j);
                     if (card0.isPair(card1)) {
                         handRank = HandRank.PAIR;
-                        removeElement(card1);
-                        removeElement(card0);
+                        relocateElement(card0,0);
+                        relocateElement(card1,1);
+                        return;
+                    }
+                }
+            }catch(Exception ex){}
+        }
+    }
+    
+    private void evaulateTwoPair() {
+        for (int i = 0+2; i < loadCards.size(); i++) {
+            Card card0 = loadCards.get(i);
+            try {
+                for (int j = -1; j <= 1; j += 2) {
+                    Card card1 = loadCards.get(i+j);
+                    if (card0.isPair(card1)) {
+                        handRank = HandRank.TWO_PAIRS;
+                        relocateElement(card0,2);
+                        relocateElement(card1,3);
                         return;
                     }
                 }
@@ -52,7 +69,7 @@ public class HandRankingService {
         }
     }
 
-    private void removeElement(Card card) {
+    private void relocateElement(Card card, int index) {
         for (int i = 0; i < loadCards.size(); i++) {
             if (loadCards.get(i).equals(card)) {
                 if (loadCards.get(i).getSuit().equals(card.getSuit())) {
@@ -61,7 +78,7 @@ public class HandRankingService {
                 }
             }
         }
-        loadCards.add(0, card);
+        loadCards.add(index, card);
     }
 
     private void resizeLoadCards() {
@@ -88,5 +105,7 @@ public class HandRankingService {
     private boolean compareNeighbours(Card previousCard, Card card) {
         return previousCard.getRankEnum().ordinal() + 1 == card.getRankEnum().ordinal();
     }
+
+    
 
 }
