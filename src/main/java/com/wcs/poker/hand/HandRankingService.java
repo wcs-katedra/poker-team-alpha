@@ -21,7 +21,7 @@ public class HandRankingService {
         evaulateTwoPair();
         evaulateThreeOfKind();
 //        evaulateStraight();
-//        evaulateFlush();
+        evaulateFlush();
 //        evaulateFullHouse();
 //        evaulateFourOfKind();
 //        evaulateStraightFlush();
@@ -36,7 +36,7 @@ public class HandRankingService {
     }
 
     private void evaulatePair() {
-        for (int i = 0; i < loadCards.size()-1; i++) {
+        for (int i = 0; i < loadCards.size() - 1; i++) {
             Card card0 = loadCards.get(i);
             Card card1 = loadCards.get(i + 1);
             if (card0.isPair(card1)) {
@@ -71,6 +71,53 @@ public class HandRankingService {
                 return;
             }
         }
+    }
+
+    private void evaulateFlush() {
+        int[] counters = {0, 0, 0, 0};
+        for (int i = 0; i < loadCards.size(); i++) {
+            Card card0 = loadCards.get(i);
+            if (card0.getSuit().equals(Suit.HEARTS.value))counters[0]++;
+            if (card0.getSuit().equals(Suit.SPADES.value))counters[1]++;
+            if (card0.getSuit().equals(Suit.CLUBS.value))counters[2]++;
+            if (card0.getSuit().equals(Suit.DIAMONDS.value))counters[3]++;
+        }
+        int suitNumber = 0;
+        for (int i = 0; i < counters.length; i++) {
+            if (counters[i] == 5) {
+                handRank = HandRank.FLUSH;
+                suitNumber = i;
+                return;
+            }
+        }
+        if (counters[suitNumber] == 5) {
+            Suit winnerSuit = null;
+            switch (suitNumber) {
+                case 0:
+                    winnerSuit = Suit.HEARTS;
+                    break;
+                case 1:
+                    winnerSuit = Suit.SPADES;
+                    break;
+                case 2:
+                    winnerSuit = Suit.CLUBS;
+                    break;
+                case 3:
+                    winnerSuit = Suit.DIAMONDS;
+                    break;
+                default:
+                    break;
+            }
+
+            Card card0 = null;
+            for (Card card : loadCards) {
+                if (!card.getSuit().equals(winnerSuit.value)) {
+                    card0 = card;
+                }
+            }
+            loadCards.remove(card0);
+        }
+
     }
 
     private void relocateElement(Card card, int index) {
