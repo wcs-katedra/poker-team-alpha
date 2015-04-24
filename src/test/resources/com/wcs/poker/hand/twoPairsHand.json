@@ -1,19 +1,19 @@
 [
     {
         "rank": "9",
-        "suit": "hearts"
-    },
-    {
-        "rank": "9",
         "suit": "clubs"
     },
     {
-        "rank": "7",
+        "rank": "9",
         "suit": "hearts"
     },
     {
         "rank": "7",
         "suit": "spades"
+    },
+    {
+        "rank": "7",
+        "suit": "hearts"
     },
     {
         "rank": "2",
