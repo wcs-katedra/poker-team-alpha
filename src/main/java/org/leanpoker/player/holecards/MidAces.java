@@ -1,6 +1,6 @@
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 public class MidAces extends AbstractHand{
     private static final String PATTERN = "[QJ]|10";
@@ -8,7 +8,7 @@ public class MidAces extends AbstractHand{
     public MidAces() {
     }
 
-    public MidAces(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+    public MidAces(PreFlopController preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
         super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
     

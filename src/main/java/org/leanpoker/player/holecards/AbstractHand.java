@@ -6,7 +6,7 @@
 package org.leanpoker.player.holecards;
 
 import com.wcs.poker.gamestate.Card;
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -14,7 +14,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public abstract class AbstractHand {
     
-    protected PreFlopContoller preFlopController;
+    protected PreFlopController preFlopController;
     protected Card card1;
     protected Card card2;
     protected int minimumRaise;
@@ -25,7 +25,7 @@ public abstract class AbstractHand {
     public AbstractHand() {
     }
 
-    public AbstractHand(PreFlopContoller preFlopContoller) {
+    public AbstractHand(PreFlopController preFlopContoller) {
         this.preFlopController = preFlopContoller;
         card1 = preFlopController.getCurrentHoleCards().get(0);
         card2 = preFlopController.getCurrentHoleCards().get(1);
@@ -33,7 +33,7 @@ public abstract class AbstractHand {
         call = preFlopController.getCall();
     }
 
-    public AbstractHand(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+    public AbstractHand(PreFlopController preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
         this(preFlopController);
         this.myPositionCat = myPositionCat;
         this.whatHappenedBeforeMe = whatHappenedBeforeMe;
@@ -45,7 +45,7 @@ public abstract class AbstractHand {
     
     //getters
 
-    public PreFlopContoller getPreFlopController() {
+    public PreFlopController getPreFlopController() {
         return preFlopController;
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractHand {
         
     //setters
 
-    public void setPreFlopController(PreFlopContoller preFlopController) {
+    public void setPreFlopController(PreFlopController preFlopController) {
         this.preFlopController = preFlopController;
     }
 

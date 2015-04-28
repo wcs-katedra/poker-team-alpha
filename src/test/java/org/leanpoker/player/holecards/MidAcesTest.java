@@ -9,7 +9,7 @@ import com.wcs.poker.gamestate.Card;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -17,7 +17,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class MidAcesTest {
     private MidAces midAces;
-    private PreFlopContoller preFlopContoller;
+    private PreFlopController preFlopController;
     
     public MidAcesTest() {
     }
@@ -25,8 +25,8 @@ public class MidAcesTest {
     @Before
     public void setUp() {
         midAces = new MidAces();
-        preFlopContoller = new PreFlopContoller();
-        midAces.setPreFlopController(preFlopContoller);
+        preFlopController = new PreFlopController();
+        midAces.setPreFlopController(preFlopController);
         midAces.setMinimumRaise(1000);
         midAces.setCall(300);
     }

@@ -1,6 +1,6 @@
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  * @author Péter
@@ -12,7 +12,7 @@ public class SmallPairs extends AbstractHand{
     public SmallPairs() {
     }
 
-    public SmallPairs(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+    public SmallPairs(PreFlopController preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
         super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 

@@ -1,7 +1,7 @@
 
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -13,7 +13,7 @@ public class BigAces extends AbstractHand{
 
     public BigAces(){}
     
-    public BigAces(PreFlopContoller preFlopContoller) {
+    public BigAces(PreFlopController preFlopContoller) {
         super(preFlopContoller);
     }
 

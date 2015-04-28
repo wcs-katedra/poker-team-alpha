@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.wcs.poker.hand;
+package com.wcs.poker.gamestate;
 
 /**
  *

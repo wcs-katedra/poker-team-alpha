@@ -9,7 +9,7 @@ import com.wcs.poker.gamestate.Card;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -17,7 +17,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class SmallPairsTest {
     private SmallPairs smallPairs;
-    private PreFlopContoller preFlopContoller;
+    private PreFlopController preFlopController;
     
     public SmallPairsTest() {
     }
@@ -25,8 +25,8 @@ public class SmallPairsTest {
     @Before
     public void setUp() {
         smallPairs = new SmallPairs();
-        preFlopContoller = new PreFlopContoller();
-        smallPairs.setPreFlopController(preFlopContoller);
+        preFlopController = new PreFlopController();
+        smallPairs.setPreFlopController(preFlopController);
         smallPairs.setMinimumRaise(1000);
         smallPairs.setCall(300);
     }

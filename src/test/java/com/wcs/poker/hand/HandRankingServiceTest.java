@@ -33,19 +33,19 @@ public class HandRankingServiceTest {
     @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void testNotLessThenFiveCardsAreAccepted() {
-        handRankingService.evaulate(Collections.nCopies(4, (Card) null));
+        handRankingService.evaluate(Collections.nCopies(4, (Card) null));
     }
     
     @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void testNotMoreThenSevenCardsAreAccepted() {
-        handRankingService.evaulate(Collections.nCopies(8, (Card) null));
+        handRankingService.evaluate(Collections.nCopies(8, (Card) null));
     }
 
     @Ignore
     @Test
-    public void testEvaulateRoyalFlushHand() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("royalFlushHandTestDataSet.json"));
+    public void testEvaluateRoyalFlushHand() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("royalFlushHandTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.ROYAL_FLUSH));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("royalFlushHand.json")));
@@ -53,8 +53,8 @@ public class HandRankingServiceTest {
     
     @Ignore
     @Test
-    public void testEvaulateStraightFlush() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("straightFlushHandTestDataSet.json"));
+    public void testEvaluateStraightFlush() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("straightFlushHandTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.STRAIGHT_FLUSH));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("straightFlush.json")));
@@ -62,8 +62,8 @@ public class HandRankingServiceTest {
     
     @Ignore
     @Test
-    public void testEvaulateFourOfAKind() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("fourOfAKindTestDataSet.json"));
+    public void testEvaluateFourOfAKind() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("fourOfAKindTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.FOUR_OF_A_KIND));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("fourOfAKindHand.json")));
@@ -71,8 +71,8 @@ public class HandRankingServiceTest {
     
     @Ignore
     @Test
-    public void testEvaulateFullHouse() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("fullHouseTestDataSet.json"));
+    public void testEvaluateFullHouse() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("fullHouseTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.FULL_HOUSE));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("fullHouseHand.json")));
@@ -80,8 +80,8 @@ public class HandRankingServiceTest {
     
 //    @Ignore
     @Test
-    public void testEvaulateFlush() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("flushTestDataSet.json"));
+    public void testEvaluateFlush() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("flushTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.FLUSH));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("flushHand.json")));
@@ -89,16 +89,16 @@ public class HandRankingServiceTest {
     
     @Ignore
     @Test
-    public void testEvaulateStraight() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("straightTestDataSet.json"));
+    public void testEvaluateStraight() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("straightTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.STRAIGHT));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("straightHand.json")));
     }
 //    @Ignore
     @Test
-    public void testEvaulateThreeOfAKind() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("threeOfAKindTestDataSet.json"));
+    public void testEvaluateThreeOfAKind() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("threeOfAKindTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.THREE_OF_A_KIND));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("threeOfAKindHand.json")));
@@ -106,16 +106,16 @@ public class HandRankingServiceTest {
     
 //    @Ignore
     @Test
-    public void testEvaulateTwoPairs() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("twoPairsTestDataSet.json"));
+    public void testEvaluateTwoPairs() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("twoPairsTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.TWO_PAIRS));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("twoPairsHand.json")));
     }
 //    @Ignore 
     @Test
-    public void testEvaulatePair() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("pairTestDataSet.json"));
+    public void testEvaluatePair() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("pairTestDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.PAIR));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("pairHand.json")));
@@ -123,8 +123,8 @@ public class HandRankingServiceTest {
     
 //    @Ignore
     @Test
-    public void testEvaulateHighCard() throws Exception {
-        Hand hand = handRankingService.evaulate(loadCards("highCardDataSet.json"));
+    public void testEvaluateHighCard() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("highCardDataSet.json"));
         
         assertThat(hand.getRank(), Is.is(HandRank.HIGH_CARD));
         assertThat(hand.getCards(), Is.is((Collection) loadCards("highCardHand.json")));

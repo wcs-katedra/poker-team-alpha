@@ -5,7 +5,7 @@
  */
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -18,7 +18,7 @@ public class SuitedAces extends AbstractHand{
     public SuitedAces() {
     }
 
-    public SuitedAces(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+    public SuitedAces(PreFlopController preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
         super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 

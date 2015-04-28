@@ -11,7 +11,7 @@ import org.leanpoker.player.holecards.*;
  *
  * @author SAVUAAP.PTE
  */
-public class PreFlopContoller {
+public class PreFlopController {
 
     private GameState gameState;
     private com.wcs.poker.gamestate.Player currentPlayer;
@@ -37,10 +37,10 @@ public class PreFlopContoller {
 
     private List<AbstractHand> handList;
 
-    public PreFlopContoller() { 
+    public PreFlopController() { 
     }
 
-    public PreFlopContoller(GameState gameState) {
+    public PreFlopController(GameState gameState) {
         this.gameState = gameState;
         divideUp();
     }

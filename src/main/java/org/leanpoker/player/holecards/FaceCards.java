@@ -1,6 +1,6 @@
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 public class FaceCards extends AbstractHand{
 
@@ -9,7 +9,7 @@ public class FaceCards extends AbstractHand{
     public FaceCards() {
     }
 
-    public FaceCards(PreFlopContoller preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
+    public FaceCards(PreFlopController preFlopController, Position myPositionCat, BetEvent whatHappenedBeforeMe) {
         super(preFlopController, myPositionCat, whatHappenedBeforeMe);
     }
 

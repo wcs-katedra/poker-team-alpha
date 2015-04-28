@@ -1,4 +1,4 @@
-package com.wcs.poker.hand;
+package com.wcs.poker.gamestate;
 
 public enum Suit {
 
@@ -7,9 +7,13 @@ public enum Suit {
     CLUBS("clubs"),
     DIAMONDS("diamonds");
 
-    String value;
+    private String value;
 
     private Suit(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

@@ -23,14 +23,14 @@ import org.leanpoker.player.holecards.Position;
  *
  * @author SAVUAAP.PTE
  */
-public class PreFlopContollerTest {
+public class PreFlopControllerTest {
     
-    private PreFlopContoller preFlopController;
+    private PreFlopController preFlopController;
     private GameState gameState;
     private static final String SOURCE = "PreFlopControllerTest.json";
     private static final String SOURCE2 = "PreFlopControllerTest2.json";
     
-    public PreFlopContollerTest() {
+    public PreFlopControllerTest() {
     }
     
     @Before
@@ -105,6 +105,6 @@ public class PreFlopContollerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        preFlopController=new PreFlopContoller(gameState);
+        preFlopController=new PreFlopController(gameState);
     }
 }

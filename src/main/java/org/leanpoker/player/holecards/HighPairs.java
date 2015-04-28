@@ -1,7 +1,7 @@
 
 package org.leanpoker.player.holecards;
 
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -13,7 +13,7 @@ public class HighPairs extends AbstractHand{
 
     public HighPairs(){}
     
-    public HighPairs(PreFlopContoller preFlopContoller) {
+    public HighPairs(PreFlopController preFlopContoller) {
         super(preFlopContoller);
     }
     

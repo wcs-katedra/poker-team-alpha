@@ -1,5 +1,6 @@
 package com.wcs.poker.hand;
 
+import com.wcs.poker.gamestate.Suit;
 import com.wcs.poker.gamestate.Card;
 import java.util.Collections;
 import java.util.List;
@@ -13,29 +14,28 @@ public class HandRankingService {
     private List<Card> loadCards;
     private HandRank handRank;
 
-    public Hand evaulate(List<Card> loadCards) {
+    public Hand evaluate(List<Card> loadCards) {
         this.loadCards = loadCards;
         Collections.sort(loadCards);
-        evaulateHighCard();
-        evaulatePair();
-        evaulateTwoPair();
-        evaulateThreeOfKind();
-//        evaulateStraight();
-        evaulateFlush();
-//        evaulateFullHouse();
-//        evaulateFourOfKind();
-//        evaulateStraightFlush();
-//        evaulateRoyalFlush();
+        evaluateHighCard();
+        evaluatePair();
+        evaluateTwoPair();
+        evaluateThreeOfKind();
+//        evaluateStraight();
+        evaluateFlush();
+//        evaluateFullHouse();
+//        evaluateFourOfKind();
+//        evaluateStraightFlush();
+//        evaluateRoyalFlush();
         resizeLoadCards();
         return new Hand(handRank, loadCards);
-        //return straightHand(loadCards);
     }
 
-    private void evaulateHighCard() {
+    private void evaluateHighCard() {
         handRank = HandRank.HIGH_CARD;
     }
 
-    private void evaulatePair() {
+    private void evaluatePair() {
         for (int i = 0; i < loadCards.size() - 1; i++) {
             Card card0 = loadCards.get(i);
             Card card1 = loadCards.get(i + 1);
@@ -48,7 +48,7 @@ public class HandRankingService {
         }
     }
 
-    private void evaulateTwoPair() {
+    private void evaluateTwoPair() {
         for (int i = 0 + 2; i < loadCards.size() - 1; i++) {
             Card card0 = loadCards.get(i);
             Card card1 = loadCards.get(i + 1);
@@ -61,7 +61,7 @@ public class HandRankingService {
         }
     }
 
-    private void evaulateThreeOfKind() {
+    private void evaluateThreeOfKind() {
         Card card0 = loadCards.get(1);
         for (int i = 0 + 2; i < loadCards.size(); i++) {
             Card card1 = loadCards.get(i);
@@ -73,14 +73,14 @@ public class HandRankingService {
         }
     }
 
-    private void evaulateFlush() {
+    private void evaluateFlush() {
         int[] counters = {0, 0, 0, 0};
         for (int i = 0; i < loadCards.size(); i++) {
             Card card0 = loadCards.get(i);
-            if (card0.getSuit().equals(Suit.HEARTS.value))counters[0]++;
-            if (card0.getSuit().equals(Suit.SPADES.value))counters[1]++;
-            if (card0.getSuit().equals(Suit.CLUBS.value))counters[2]++;
-            if (card0.getSuit().equals(Suit.DIAMONDS.value))counters[3]++;
+            if (card0.getSuit().equals(Suit.HEARTS.getValue()))counters[0]++;
+            if (card0.getSuit().equals(Suit.SPADES.getValue()))counters[1]++;
+            if (card0.getSuit().equals(Suit.CLUBS.getValue()))counters[2]++;
+            if (card0.getSuit().equals(Suit.DIAMONDS.getValue()))counters[3]++;
         }
         int suitNumber = 0;
         for (int i = 0; i < counters.length; i++) {
@@ -111,7 +111,7 @@ public class HandRankingService {
 
             Card card0 = null;
             for (Card card : loadCards) {
-                if (!card.getSuit().equals(winnerSuit.value)) {
+                if (!card.getSuit().equals(winnerSuit.getValue())) {
                     card0 = card;
                 }
             }
@@ -137,7 +137,7 @@ public class HandRankingService {
     }
 //------------------------------------------------------------------------------
 
-    private Hand straightHand(List<Card> loadCards) {
+    private void evaluateStraight() {
         Collections.sort(loadCards);
         Card previousCard = null;
         int counter = 0;
@@ -148,13 +148,12 @@ public class HandRankingService {
             previousCard = card;
         }
         if (counter == 5) {
-            return new Hand(HandRank.STRAIGHT, loadCards);
+            handRank = HandRank.STRAIGHT;
         }
-        return null;
     }
 
     private boolean compareNeighbours(Card previousCard, Card card) {
-        return previousCard.getRankEnum().ordinal() + 1 == card.getRankEnum().ordinal();
+        return previousCard.getRankEnum().ordinal() == card.getRankEnum().ordinal() + 1;
     }
 
 }

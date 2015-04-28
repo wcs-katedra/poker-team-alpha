@@ -3,7 +3,6 @@ package com.wcs.poker.gamestate;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
-import com.wcs.poker.hand.Rank;
 import java.util.Objects;
 
 @Generated("org.jsonschema2pojo")

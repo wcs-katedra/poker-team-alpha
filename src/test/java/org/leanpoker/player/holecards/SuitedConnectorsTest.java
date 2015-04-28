@@ -9,7 +9,7 @@ import com.wcs.poker.gamestate.Card;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.leanpoker.player.PreFlopContoller;
+import org.leanpoker.player.PreFlopController;
 
 /**
  *
@@ -17,7 +17,7 @@ import org.leanpoker.player.PreFlopContoller;
  */
 public class SuitedConnectorsTest {
     private SuitedConnectors suitedConnectors;
-    private PreFlopContoller preFlopContoller;
+    private PreFlopController preFlopController;
     
     public SuitedConnectorsTest() {
     }
@@ -25,8 +25,8 @@ public class SuitedConnectorsTest {
     @Before
     public void setUp() {
         suitedConnectors = new SuitedConnectors();
-        preFlopContoller = new PreFlopContoller();
-        suitedConnectors.setPreFlopController(preFlopContoller);
+        preFlopController = new PreFlopController();
+        suitedConnectors.setPreFlopController(preFlopController);
         suitedConnectors.setMinimumRaise(1000);
         suitedConnectors.setCall(300);
     }
