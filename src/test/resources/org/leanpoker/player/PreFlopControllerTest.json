@@ -1,0 +1,97 @@
+{
+    "small_blind": 10,                              
+    "current_buy_in": 100,
+    "pot": 1000,                                     
+    "minimum_raise": 50,                          
+    "dealer": 0,                                    
+    "orbits": 7,                                    
+    "in_action": 8,                                 
+    "players": [
+        {
+            "id": 0,
+            "name": "Dani",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 20
+        },
+        {
+            "id": 1,
+            "name": "Danika",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 20
+        },
+        {
+            "id": 2,
+            "name": "Daniella",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 20
+        },
+        {
+            "id": 3,
+            "name": "Dávid",
+            "status": "folded",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 0
+        },
+        {
+            "id": 4,
+            "name": "Erzsi",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 20
+        },
+        {
+            "id": 5,
+            "name": "Vince",
+            "status": "out",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 0
+        },
+        {
+            "id": 6,
+            "name": "Dávid",
+            "status": "folded",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 0
+        },
+        {
+            "id": 7,
+            "name": "Erzsi",
+            "status": "active",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 20
+        },
+        {
+            "id": 8,
+            "name": "Vince",
+            "status": "out",
+            "version": "Default random player",
+            "stack": 1000,
+            "bet": 0
+        }
+    ],
+    "community_cards": [
+        {
+            "rank": "4",
+            "suit": "spades"
+        },
+        {
+            "rank": "A",
+            "suit": "hearts"
+        },
+        {
+            "rank": "6",
+            "suit": "clubs"
+        }
+    ]
+}

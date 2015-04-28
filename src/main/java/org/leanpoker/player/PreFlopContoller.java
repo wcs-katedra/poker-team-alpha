@@ -37,15 +37,15 @@ public class PreFlopContoller {
 
     private List<AbstractHand> handList;
 
-    public PreFlopContoller() {
+    public PreFlopContoller() { 
     }
 
-    PreFlopContoller(GameState gameState) {
+    public PreFlopContoller(GameState gameState) {
         this.gameState = gameState;
+        divideUp();
     }
 
     public int betRequest() {
-        divideUp();
         handList = new ArrayList<>();
         myPositionCat = whatPositionIhave();
         expectedPot = countExpectedPot();
@@ -115,7 +115,7 @@ public class PreFlopContoller {
     public int countExpectedPot() {
         int expectedPot = smallBlind * 3;
         folded = 0;
-        for (int i = (currentDealerPosition + 3) % playersNumber; i < currentPlayerLoc; i++) {
+        for (int i = (currentDealerPosition + 3) % playersNumber; i <= currentPlayerLoc; i++) {
             if (players.get(i).getStatus().equals("active")) {
                 expectedPot += bigBlind;
             } else if (players.get(i).getStatus().equals("folded")) {

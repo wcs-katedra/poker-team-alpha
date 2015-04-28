@@ -5,12 +5,14 @@
  */
 package org.leanpoker.player;
 
-import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.Player;
 import com.wcs.poker.gamestate.GameState;
+import com.wcs.poker.jsonconverter.JsonConverter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,86 +25,44 @@ import org.leanpoker.player.holecards.Position;
  */
 public class PreFlopContollerTest {
     
-    PreFlopContoller preFlopController;
-    GameState gamestate;
+    private PreFlopContoller preFlopController;
+    private GameState gameState;
+    private static final String SOURCE = "PreFlopControllerTest.json";
+    private static final String SOURCE2 = "PreFlopControllerTest2.json";
     
     public PreFlopContollerTest() {
     }
     
     @Before
     public void setUpClass() {
-        preFlopController=new PreFlopContoller();
-        gamestate=new GameState();
-    }
-    
-    /**
-     * Test of start method, of class PreFlopContoller.
-     */
-    //@Test
-    public void testStart() {
+        readJson(SOURCE);
         
     }
     
     @Test
     public void testWhatHappenedBefore() {
-        preFlopController.setPot(1000);
-        preFlopController.setSmallBlind(10);
+        int expectedPot=500;
+        
         preFlopController.setEverybodyFolded(true);
-        Integer expectedPot=500;
         assertEquals(BetEvent.EVERYBODY_FOLDED, preFlopController.whatHappenedBeforeMe(expectedPot));
         
         preFlopController.setPot(50);
-        preFlopController.setSmallBlind(10);
         preFlopController.setEverybodyFolded(false);
         expectedPot=120;
         assertEquals(BetEvent.SOMEBODY_CALLED, preFlopController.whatHappenedBeforeMe(expectedPot));
         
         preFlopController.setPot(1000);
-        preFlopController.setSmallBlind(10);
-        preFlopController.setEverybodyFolded(false);
         expectedPot=500;
         assertEquals(BetEvent.SOMEBODY_RAISED, preFlopController.whatHappenedBeforeMe(expectedPot));
     }
     
     @Test
     public void testCountExpectedPot() {
-        List<Player> players=new ArrayList<>();
-        preFlopController.setCurrentDealerPosition(0);
-        preFlopController.setCurrentPlayerLoc(9);
-        preFlopController.setBigBlind(20);
-        preFlopController.setSmallBlind(10);
-        Player player1,player2,player3;
-        Random rand = new Random();
-        for (int i = 0; i < 3; i++) {
-            player1=new Player(i, "Dani", "active", "Default", 1000, 20);
-            players.add(player1);
-        }
-        for (int i = 0; i < 2; i++) {
-            player2=new Player(i, "Dávid", "folded", "Default", 1000, 0);
-            players.add(player2);
-            player1=new Player(i+1, "Erzsi", "active", "Default", 1000, 20);
-            players.add(player1);
-            player3=new Player(i+2, "Vince", "out", "Default", 1000, 0);
-            players.add(player3);
-        }
-        preFlopController.setPlayers(players);
-        preFlopController.setPlayersNumber(players.size());
-        
         assertTrue((30+2*20)==preFlopController.countExpectedPot());
         assertFalse(preFlopController.isEverybodyFolded());
         assertTrue(preFlopController.getFolded()==2);
         
-        players.clear();
-        for (int i = 0; i < 3; i++) {
-            player1=new Player(i, "Dani", "active", "Default", 1000, 20);
-            players.add(player1);
-        }
-        for (int i = 0; i < 6; i++) {
-            player1=new Player(i, "Üres", "folded", "Default", 1000, 20);
-            players.add(player1);
-        }
-        preFlopController.setPlayers(players);
-        preFlopController.setPlayersNumber(players.size());
+        readJson(SOURCE2);
         
         assertTrue(30==preFlopController.countExpectedPot());
         assertTrue(preFlopController.getFolded()==6);
@@ -111,7 +71,6 @@ public class PreFlopContollerTest {
     
     @Test
     public void testWhatPositionIhave() {
-        preFlopController.setCurrentDealerPosition(0);
         preFlopController.setCurrentPlayerLoc(1);
         preFlopController.setPlayersNumber(10);
         preFlopController.setMiddlePosition(33);
@@ -130,7 +89,6 @@ public class PreFlopContollerTest {
     
     @Test
     public void testAmIBlind() {
-        preFlopController.setCurrentDealerPosition(0);
         preFlopController.setPlayersNumber(10);
         
         preFlopController.setCurrentPlayerLoc(2);
@@ -140,4 +98,13 @@ public class PreFlopContollerTest {
         assertFalse(preFlopController.amIblind());
     }
 
+    private void readJson(String source) {
+        try (InputStream resource = getClass().getResourceAsStream(source)) {
+            String json = IOUtils.toString(resource);
+            gameState = new JsonConverter<>(GameState.class).fromJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        preFlopController=new PreFlopContoller(gameState);
+    }
 }
