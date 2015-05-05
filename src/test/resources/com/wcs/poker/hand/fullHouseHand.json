@@ -1,13 +1,5 @@
 [
     {
-        "rank": "6",
-        "suit": "clubs"
-    },
-    {
-        "rank": "6",
-        "suit": "diamonds"
-    },
-    {
         "rank": "3",
         "suit": "hearts"
     },
@@ -18,5 +10,13 @@
     {
         "rank": "3",
         "suit": "spades"
+    },
+    {
+        "rank": "6",
+        "suit": "clubs"
+    },
+    {
+        "rank": "6",
+        "suit": "diamonds"
     }
 ]
