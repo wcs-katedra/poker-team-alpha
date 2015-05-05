@@ -2,6 +2,7 @@ package com.wcs.poker.hand;
 
 import com.wcs.poker.gamestate.Suit;
 import com.wcs.poker.gamestate.Card;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,19 +17,19 @@ public class HandRankingService {
 
     public Hand evaluate(List<Card> loadCards) {
         this.loadCards = loadCards;
-        Collections.sort(loadCards);
+        Collections.sort(this.loadCards);
         evaluateHighCard();
         evaluatePair();
         evaluateTwoPair();
         evaluateThreeOfKind();
-//        evaluateStraight();
+        evaluateStraight();
         evaluateFlush();
 //        evaluateFullHouse();
 //        evaluateFourOfKind();
 //        evaluateStraightFlush();
 //        evaluateRoyalFlush();
         resizeLoadCards();
-        return new Hand(handRank, loadCards);
+        return new Hand(handRank, this.loadCards);
     }
 
     private void evaluateHighCard() {
@@ -121,23 +122,25 @@ public class HandRankingService {
     }
     
     private void evaluateStraight() {
-        int counter=0;Card card0,card1;
-        for (int i = 0; i < loadCards.size()-1; i++) {
-            card0=loadCards.get(i);
-            card1=loadCards.get(i+1);
+        int counter=0;Card card0,card1;int a=0;
+        List<Card> localCards=new ArrayList<>(loadCards);
+        for (int i = 0; i < localCards.size()-1; i++) {
+            card0=localCards.get(i+a);
+            card1=localCards.get(i+1+a);
             if (compareNeighbours(card0, card1)) {
-                relocateElement(card0, counter);
-                relocateElement(card1, counter + 1);
+                localCards=relocateElement(card0, counter,localCards);
+                localCards=relocateElement(card1, counter + 1,localCards);
                 counter++;
                 if (counter == 4) {
                     handRank = HandRank.STRAIGHT;
-                    return;
+                    this.loadCards.clear();
+                    this.loadCards.addAll(localCards);
                 }
             } else {
-                relocateElement(card0, loadCards.size() - 1);
+                localCards=relocateElement(card0, localCards.size() - 1,localCards);
+                a=-1;
             }
         }
-        
     }
 
     private void relocateElement(Card card, int index) {
@@ -152,8 +155,21 @@ public class HandRankingService {
         loadCards.add(index, card);
     }
     
+    private List<Card> relocateElement(Card card, int index, List<Card> cards){
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).equals(card)) {
+                if (cards.get(i).getSuit().equals(card.getSuit())) {
+                    cards.remove(i);
+                    break;
+                }
+            }
+        }
+        cards.add(index, card);
+        return cards;
+    }
+    
      private boolean compareNeighbours(Card upperCard, Card lowerCard) {
-        return upperCard.getRankEnum().ordinal() == lowerCard.getRankEnum().ordinal() + 1;
+        return upperCard.getRankEnum().ordinal() == lowerCard.getRankEnum().ordinal() - 1;
     }
     
     private void resizeLoadCards() {
