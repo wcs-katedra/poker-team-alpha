@@ -28,7 +28,7 @@ public class HandRankingService {
         evaluateFullHouse();
         evaluateFourOfKind();
         evaluateStraightFlush();
-//        evaluateRoyalFlush();
+        evaluateRoyalFlush();
         resizeLoadCards();
         return new Hand(handRank, this.loadCards);
     }
@@ -86,7 +86,7 @@ public class HandRankingService {
         }
         int suitNumber = 0;
         for (int i = 0; i < counters.length; i++) {
-            if (counters[i] == 5) {
+            if (counters[i] >= 5) {
                 handRank = HandRank.FLUSH;
                 suitNumber = i;
                 return;
@@ -193,6 +193,15 @@ public class HandRankingService {
         }
     }
     
+    private void evaluateRoyalFlush() {
+        if(handRank==HandRank.STRAIGHT_FLUSH){
+           Card card0=loadCards.get(0);
+           if(card0.getRank().equals(Rank.A.getValue())){
+            handRank=HandRank.ROYAL_FLUSH;
+           }
+        }
+    }
+    
     private void relocateElement(Card card, int index) {
         for (int i = 0; i < loadCards.size(); i++) {
             if (loadCards.get(i).equals(card)) {
@@ -278,6 +287,8 @@ public class HandRankingService {
             }
         }
     }
+
+    
 
     
 

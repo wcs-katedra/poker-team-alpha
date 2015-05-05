@@ -42,7 +42,7 @@ public class HandRankingServiceTest {
         handRankingService.evaluate(Collections.nCopies(8, (Card) null));
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void testEvaluateRoyalFlushHand() throws Exception {
         Hand hand = handRankingService.evaluate(loadCards("royalFlushHandTestDataSet.json"));
