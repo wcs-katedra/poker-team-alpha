@@ -24,7 +24,7 @@ public class HandRankingService {
         evaluateThreeOfKind();
         evaluateStraight();
         evaluateFlush();
-//        evaluateFullHouse();
+        evaluateFullHouse();
 //        evaluateFourOfKind();
 //        evaluateStraightFlush();
 //        evaluateRoyalFlush();
@@ -143,6 +143,24 @@ public class HandRankingService {
         }
     }
 
+    private void evaluateFullHouse() {
+        Card card0=loadCards.get(0);
+        Card card1=loadCards.get(2);
+        for (int i = 4; i < loadCards.size(); i++) {
+            Card card2=loadCards.get(i);
+            if(card0.isPair(card2)){
+                handRank=HandRank.FULL_HOUSE;
+                relocateElement(card2, 2);
+            }
+            if(card1.isPair(card2)){
+                handRank=HandRank.FULL_HOUSE;
+                relocateElement(card2, 4);
+            }
+            
+        }   
+      
+    }
+    
     private void relocateElement(Card card, int index) {
         for (int i = 0; i < loadCards.size(); i++) {
             if (loadCards.get(i).equals(card)) {
@@ -195,6 +213,8 @@ public class HandRankingService {
 //    private boolean compareNeighbours(Card previousCard, Card card) {
 //        return previousCard.getRankEnum().ordinal() == card.getRankEnum().ordinal() + 1;
 //    }
+
+    
 
     
 
