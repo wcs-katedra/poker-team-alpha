@@ -119,6 +119,26 @@ public class HandRankingService {
         }
 
     }
+    
+    private void evaluateStraight() {
+        int counter=0;Card card0,card1;
+        for (int i = 0; i < loadCards.size()-1; i++) {
+            card0=loadCards.get(i);
+            card1=loadCards.get(i+1);
+            if (compareNeighbours(card0, card1)) {
+                relocateElement(card0, counter);
+                relocateElement(card1, counter + 1);
+                counter++;
+                if (counter == 4) {
+                    handRank = HandRank.STRAIGHT;
+                    return;
+                }
+            } else {
+                relocateElement(card0, loadCards.size() - 1);
+            }
+        }
+        
+    }
 
     private void relocateElement(Card card, int index) {
         for (int i = 0; i < loadCards.size(); i++) {
@@ -131,29 +151,35 @@ public class HandRankingService {
         }
         loadCards.add(index, card);
     }
-
+    
+     private boolean compareNeighbours(Card upperCard, Card lowerCard) {
+        return upperCard.getRankEnum().ordinal() == lowerCard.getRankEnum().ordinal() + 1;
+    }
+    
     private void resizeLoadCards() {
         loadCards.subList(5, loadCards.size()).clear();
     }
 //------------------------------------------------------------------------------
 
-    private void evaluateStraight() {
-        Collections.sort(loadCards);
-        Card previousCard = null;
-        int counter = 0;
-        for (Card card : loadCards) {
-            if (previousCard != null && compareNeighbours(previousCard, card)) {
-                counter++;
-            }
-            previousCard = card;
-        }
-        if (counter == 5) {
-            handRank = HandRank.STRAIGHT;
-        }
-    }
+//    private void evaluateStraight() {
+//        Collections.sort(loadCards);
+//        Card previousCard = null;
+//        int counter = 0;
+//        for (Card card : loadCards) {
+//            if (previousCard != null && compareNeighbours(previousCard, card)) {
+//                counter++;
+//            }
+//            previousCard = card;
+//        }
+//        if (counter == 5) {
+//            handRank = HandRank.STRAIGHT;
+//        }
+//    }
+//
+//    private boolean compareNeighbours(Card previousCard, Card card) {
+//        return previousCard.getRankEnum().ordinal() == card.getRankEnum().ordinal() + 1;
+//    }
 
-    private boolean compareNeighbours(Card previousCard, Card card) {
-        return previousCard.getRankEnum().ordinal() == card.getRankEnum().ordinal() + 1;
-    }
+    
 
 }
