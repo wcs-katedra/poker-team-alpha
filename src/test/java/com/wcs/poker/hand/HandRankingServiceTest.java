@@ -87,6 +87,15 @@ public class HandRankingServiceTest {
         assertThat(hand.getCards(), Is.is((Collection) loadCards("flushHand.json")));
     }
     
+    //    @Ignore
+    @Test
+    public void testEvaluateStraightA() throws Exception {
+        Hand hand = handRankingService.evaluate(loadCards("straightTestDataSet_A.json"));
+        
+        assertThat(hand.getRank(), Is.is(HandRank.STRAIGHT));
+        assertThat(hand.getCards(), Is.is((Collection) loadCards("straightHand_A.json")));
+    }
+    
 //    @Ignore
     @Test
     public void testEvaluateStraight() throws Exception {

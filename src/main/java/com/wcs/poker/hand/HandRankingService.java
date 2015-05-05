@@ -2,6 +2,7 @@ package com.wcs.poker.hand;
 
 import com.wcs.poker.gamestate.Suit;
 import com.wcs.poker.gamestate.Card;
+import com.wcs.poker.gamestate.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ public class HandRankingService {
         evaluateFlush();
         evaluateFullHouse();
         evaluateFourOfKind();
-//        evaluateStraightFlush();
+        evaluateStraightFlush();
 //        evaluateRoyalFlush();
         resizeLoadCards();
         return new Hand(handRank, this.loadCards);
@@ -124,6 +125,30 @@ public class HandRankingService {
     private void evaluateStraight() {
         int counter=0;Card card0,card1;int a=0;
         List<Card> localCards=new ArrayList<>(loadCards);
+        card0=localCards.get(localCards.size()-1);
+        if (card0.getRank().equals(Rank.TWO.getValue())) {
+            card0 = localCards.get(localCards.size() - 2);
+            if (card0.getRank().equals(Rank.THREE.getValue())) {
+                card0 = localCards.get(localCards.size() - 3);
+                if (card0.getRank().equals(Rank.FOUR.getValue())) {
+                    card0 = localCards.get(localCards.size() - 4);
+                    if (card0.getRank().equals(Rank.FIVE.getValue())) {
+                        for (int i = 0; i < localCards.size(); i++) {
+                            card0=localCards.get(i);
+                            if(card0.getRank().equals(Rank.A.getValue())){
+                                relocateElement(card0, localCards.size()-1,localCards);
+                                localCards.subList(0,localCards.size()-5).clear();
+                                handRank=HandRank.STRAIGHT;
+                                this.loadCards.clear();
+                                this.loadCards.addAll(localCards);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         for (int i = 0; i < localCards.size()-1; i++) {
             card0=localCards.get(i+a);
             card1=localCards.get(i+1+a);
@@ -178,6 +203,17 @@ public class HandRankingService {
         }
     }
     
+    private void evaluateStraightFlush() {
+//        if (handRank == HandRank.FLUSH) {
+//            evaluateStraight();
+//            if (handRank == HandRank.STRAIGHT) {
+//                handRank=HandRank.STRAIGHT_FLUSH;
+//            }else{
+//                evaluateFlush();
+//            }
+//        }
+    }
+    
     private void relocateElement(Card card, int index) {
         for (int i = 0; i < loadCards.size(); i++) {
             if (loadCards.get(i).equals(card)) {
@@ -230,6 +266,8 @@ public class HandRankingService {
 //    private boolean compareNeighbours(Card previousCard, Card card) {
 //        return previousCard.getRankEnum().ordinal() == card.getRankEnum().ordinal() + 1;
 //    }
+
+    
 
     
 

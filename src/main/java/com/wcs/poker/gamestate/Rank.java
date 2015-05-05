@@ -29,4 +29,8 @@ public enum Rank {
         }
         return null;
     }
+    
+    public String getValue(){
+        return value;
+    }
 }
